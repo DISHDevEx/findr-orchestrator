@@ -11,3 +11,7 @@
 # Windows
 Thumbs.db
 
+#terrafrom
+.terraform.lock.hcl
+.terragrunt-cache/
+*.tfvars

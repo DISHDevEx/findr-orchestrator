@@ -4,7 +4,6 @@ Terragrunt configuration for all modules.
 #Locals
 locals {
   backend_vars = jsondecode(read_tfvars_file("./terraform.tfvars"))
-  findr_vars = jsondecode(read_tfvars_file("./findr.tfvars"))
 }
 
 #Terraform source

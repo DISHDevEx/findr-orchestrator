@@ -17,15 +17,15 @@ This Terraform script deploys [HashiCorp Vault](https://www.vaultproject.io/), a
 ## Setup and Deployment
 
 ### Step 1: Initialization
-- Uncomment source = "./vault/main.tf" in terragrunt.hcl
-- Update local kubectl config file
+Uncomment source = "./vault/main.tf" in terragrunt.hcl
+Update local kubectl config file
 
 ```shell
 aws eks --region us-east-1 update-kubeconfig --name findr-utilities
 kubectl create namespace vault
 ```
 
-- Run the following command in your terminal to initialize Terraform and download the required providers:
+Run the following command in your terminal to initialize Terraform and download the required providers:
 
 ```shell
 terraform init

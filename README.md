@@ -9,12 +9,12 @@ Each of these services plays a crucial role and together, these tools integrate 
 
 ## Prerequisites
 - AWS CLI configured with appropriate permissions.
-- Terraform and Helm installed on your local machine.
-- Basic knowledge of Terraform, Helm, Kubernetes, and AWS.
+- Terraform, Terragrunt and Helm installed on your local machine.
+- Basic knowledge of Terraform, Terragrunt, Helm, Kubernetes, and AWS.
 
 ## Configuration Files
 - `main.tf`: The main Terraform configuration file for deploying the FINDR Orchestrator.
-- `variables`.tf: Contains all the variables used in the Terraform configuration, allowing for customization.
+- `variables.tf`: Contains all the variables used in the Terraform configuration, allowing for customization.
 - `outputs.tf`: Defines the outputs of the Terraform configuration, such as service endpoints and access keys.
 - `terragrunt.hcl`: Terragrunt configuration file for additional infrastructure management capabilities.
 

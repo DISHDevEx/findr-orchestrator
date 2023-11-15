@@ -8,7 +8,9 @@ locals {
 
 #Terraform source
 terraform {
-  source = "./main.tf"
+  #source = "./main.tf"
+  source = "./vault/main.tf"
+  #source = "./harbor/main.tf"
 }
 
 #Providers
@@ -32,6 +34,14 @@ generate "provider" {
 provider "aws" {
   region  = var.aws_region
   profile = var.profile
+}
+provider "kubernetes"{
+  config_path    = "~/.kube/config"
+}
+provider "helm"{
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
 }
 /*
 provider "vault" {

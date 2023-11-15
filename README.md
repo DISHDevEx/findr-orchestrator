@@ -44,8 +44,9 @@ Apply the Terraform configuration to deploy Harbor:
 terraform apply -var-file="findr.tfvars"
 ```
 
-### Step 4: Access FINDR
-After deployment, the FINDR app is ready to use and will be accessible through the provided URL.
+### Step 4: Deploy individual services
+- Follow service specific readme for seameless deployment.
+- After successful deployment, the FINDR app is ready to use and will be accessible through the provided URL.
 
 ## Customization
 You can customize the deployment by modifying the `main.tf`, `variables.tf`, `outputs.tf`, and `terragrunt.hcl` files. This includes changing settings and configurations to meet specific requirements.

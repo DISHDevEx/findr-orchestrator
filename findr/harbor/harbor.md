@@ -17,15 +17,15 @@ This Terraform script deploys [Harbor](https://goharbor.io/), an open-source con
 ## Setup and Deployment
 
 ### Step 1: Initialization
-- Uncomment source = "./harbor/main.tf" in terragrunt.hcl
-- Update local kubectl config file
+Uncomment source = "./harbor/main.tf" in terragrunt.hcl
+Update local kubectl config file
 
 ```shell
 aws eks --region us-east-1 update-kubeconfig --name findr-utilities
 kubectl create namespace harbor
 ```
 
-- Run the following command in your terminal to initialize Terraform and download the required providers:
+Run the following command in your terminal to initialize Terraform and download the required providers:
 
 ```shell
 terraform init
@@ -54,6 +54,3 @@ You can customize the Harbor deployment by modifying the `main.tf` and `outputs.
 ## Notes
 - This script deploys Harbor with a LoadBalancer service. Ensure your EKS cluster can provision LoadBalancers.
 - Always review and test Terraform scripts in a development environment before applying them in production.
-
-## License
-Include license information here, if applicable.

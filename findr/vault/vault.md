@@ -7,8 +7,8 @@ This Terraform script deploys [HashiCorp Vault](https://www.vaultproject.io/), a
 ## Prerequisites
 - An existing Amazon EKS cluster.
 - AWS CLI configured with appropriate permissions.
-- Terraform and Helm installed on your local machine.
-- Basic knowledge of Terraform, Helm, Kubernetes, and AWS.
+- Terraform, Terragrunt and Helm installed on your local machine.
+- Basic knowledge of Terraform, Terragrunt, Helm, Kubernetes, and AWS.
 
 ## Configuration Files
 - `main.tf`: The main Terraform configuration file for deploying Vault using the Helm chart.

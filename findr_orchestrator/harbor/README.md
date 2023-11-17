@@ -17,7 +17,7 @@ This Terraform script deploys [Harbor](https://goharbor.io/), an open-source con
 ## Setup and Deployment
 
 ### Step 1: Initialization
-Uncomment source = "./harbor/main.tf" in terragrunt.hcl
+Uncomment source = "./findr_orchestrator/harbor/main.tf" in terragrunt.hcl
 Update local kubectl config file
 
 ```shell

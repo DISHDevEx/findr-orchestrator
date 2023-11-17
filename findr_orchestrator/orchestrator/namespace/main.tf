@@ -1,7 +1,4 @@
-provider "kubernetes" {
-  config_path = "/Users/rizwan.bhatty/.kube/config-cluster-b.yaml"
-}
-
+# Define a Kubernetes namespace resource
 resource "kubernetes_namespace" "findr_namespace" {
   metadata {
     name = var.namespace_name

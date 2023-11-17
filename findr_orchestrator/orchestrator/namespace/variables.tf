@@ -1,4 +1,4 @@
-variable "pod_name" {
+variable "namespace_name" {
   type    = string
   default = ""
 }

@@ -17,7 +17,7 @@ This Terraform script deploys [HashiCorp Vault](https://www.vaultproject.io/), a
 ## Setup and Deployment
 
 ### Step 1: Initialization
-Uncomment source = "./vault/main.tf" in terragrunt.hcl
+Uncomment source = "./findr_orchestrator/vault/main.tf" in terragrunt.hcl
 Update local kubectl config file
 
 ```shell

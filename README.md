@@ -19,38 +19,8 @@ Each of these services plays a crucial role and together, these tools integrate 
 - `terragrunt.hcl`: Terragrunt configuration file for additional infrastructure management capabilities.
 
 ## Setup and Deployment
-
-### Step 1: Initialization
-Uncomment source = "./main.tf" in terragrunt.hcl
-create terraform.tfvars & findr.tfvars files with the required variables to pass at runtime
-*** Don't commit these files to any repositories ***
-Run the following command in your terminal to initialize Terraform and download the required providers:
-
-```shell
-terraform init
-```
-
-### Step 2: Plan Deployment
-Execute the following command to preview the actions Terraform will perform:
-
-```shell
-terraform plan -var-file="findr.tfvars"
-```
-
-### Step 3: Apply Configuration
-Apply the Terraform configuration to deploy Harbor:
-
-```shell
-terraform apply -var-file="findr.tfvars"
-```
-
-### Step 4: Deploy individual services
 - Follow service specific readme for seameless deployment.
 - After successful deployment, the FINDR app is ready to use and will be accessible through the provided URL.
 
 ## Customization
 You can customize the deployment by modifying the `main.tf`, `variables.tf`, `outputs.tf`, and `terragrunt.hcl` files. This includes changing settings and configurations to meet specific requirements.
-
-## Notes
-- This script deploys Harbor with a LoadBalancer service. Ensure your EKS cluster can provision LoadBalancers.
-- Always review and test Terraform scripts in a development environment before applying them in production.

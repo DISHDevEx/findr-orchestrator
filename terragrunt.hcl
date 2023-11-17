@@ -8,9 +8,12 @@ locals {
 
 #Terraform source
 terraform {
-  #source = "./main.tf"
-  source = "./vault/main.tf"
-  #source = "./harbor/main.tf"
+  source = "./findr_orchestrator/orchestrator/cluster/main.tf"
+  #source = "./findr_orchestrator/orchestrator/namespace/main.tf"
+  #source = "./findr_orchestrator/orchestrator/pod/main.tf"
+  #source = "./findr_orchestrator/vault/main.tf"
+  #source = "./findr_orchestrator/harbor/main.tf"
+  
 }
 
 #Providers
@@ -36,11 +39,11 @@ provider "aws" {
   profile = var.profile
 }
 provider "kubernetes"{
-  config_path    = "~/.kube/config"
+  config_path    = var.kube_config
 }
 provider "helm"{
   kubernetes {
-    config_path = "~/.kube/config"
+    config_path = var.kube_config
   }
 }
 /*
@@ -71,5 +74,6 @@ remote_state {
     key            = local.backend_vars.backend_bucket_key
     encrypt        = true
     dynamodb_table = local.backend_vars.backend_dynamodb_table_name
+    kube_config    = local.backend_vars.kube_config
   }
 }

@@ -3,12 +3,12 @@
 
 ## Creating Cluster
 ### Step 1: Initialization
-Uncomment source = "./findr_orchestrator/orchestrator/cluster/main.tf" in terragrunt.hcl
-create terraform.tfvars & findr.tfvars files with the required variables to pass at runtime
+Create terraform.tfvars & findr.tfvars files with the required variables to pass at runtime
 *** Don't commit these files to any repositories ***
-Run the following command in your terminal to initialize Terraform and download the required providers:
+Run the following command in your terminal to create a .hcl with required source and initialize Terraform and download the required providers:
 
 ```shell
+./terragrunt.sh "./findr_orchestrator/orchestrator/cluster/main.tf"
 terraform init
 ```
 
@@ -28,8 +28,7 @@ terraform apply -var-file="findr.tfvars"
 
 ## Creating Namespace
 ### Step 1: Initialization
-Uncomment source = "./findr_orchestrator/orchestrator/namespace/main.tf" in terragrunt.hcl
-create terraform.tfvars & findr.tfvars files with the required variables to pass at runtime
+Create terraform.tfvars & findr.tfvars files with the required variables to pass at runtime
 *** Don't commit these files to any repositories ***
 
 Update local kubectl config file
@@ -38,9 +37,10 @@ Update local kubectl config file
 aws eks --region us-east-1 update-kubeconfig --name findr-utilities
 ```
 
-Run the following command in your terminal to initialize Terraform and download the required providers:
+Run the following command in your terminal to create a .hcl with required source and initialize Terraform and download the required providers:
 
 ```shell
+./terragrunt.sh "./findr_orchestrator/orchestrator/namespace/main.tf"
 terraform init
 ```
 
@@ -59,8 +59,7 @@ terraform apply -var-file="findr.tfvars"
 ```
 
 ## Creating Pod
-Uncomment source = "./findr_orchestrator/orchestrator/pod/main.tf" in terragrunt.hcl
-create terraform.tfvars & findr.tfvars files with the required variables to pass at runtime
+Create terraform.tfvars & findr.tfvars files with the required variables to pass at runtime
 *** Don't commit these files to any repositories ***
 
 Update local kubectl config file
@@ -69,9 +68,10 @@ Update local kubectl config file
 aws eks --region us-east-1 update-kubeconfig --name findr-utilities
 ```
 
-Run the following command in your terminal to initialize Terraform and download the required providers:
+Run the following command in your terminal to create a .hcl with required source and initialize Terraform and download the required providers:
 
 ```shell
+./terragrunt.sh "./findr_orchestrator/orchestrator/pod/main.tf"
 terraform init
 ```
 

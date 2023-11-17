@@ -17,7 +17,6 @@ This Terraform script deploys [Harbor](https://goharbor.io/), an open-source con
 ## Setup and Deployment
 
 ### Step 1: Initialization
-Uncomment source = "./findr_orchestrator/harbor/main.tf" in terragrunt.hcl
 Update local kubectl config file
 
 ```shell
@@ -25,9 +24,10 @@ aws eks --region us-east-1 update-kubeconfig --name findr-utilities
 kubectl create namespace harbor
 ```
 
-Run the following command in your terminal to initialize Terraform and download the required providers:
+Run the following command in your terminal to create a .hcl with required source and initialize Terraform and download the required providers:
 
 ```shell
+./terragrunt.sh "./findr_orchestrator/harbor/main.tf"
 terraform init
 ```
 

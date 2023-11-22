@@ -114,12 +114,7 @@ variable "eks_cluster_name_2" {
   default     = null
   sensitive   = true
 }
-variable "eks_cluster_name_3" {
-  description = "unique cluster name 3"
-  type        = string
-  default     = null
-  sensitive   = true
-}
+
 variable "eks_node_group_name_1" {
   description = "unique node group name 1"
   type        = string
@@ -132,12 +127,7 @@ variable "eks_node_group_name_2" {
   default     = null
   sensitive   = true
 }
-variable "eks_node_group_name_3" {
-  description = "unique node group name 3"
-  type        = string
-  default     = null
-  sensitive   = true
-}
+
 variable "eks_node_instance_types" {
   description = "instance types"
   type        = string

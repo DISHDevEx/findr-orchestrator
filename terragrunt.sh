@@ -13,7 +13,7 @@ shift
 
 # Path to the template and the new terragrunt.hcl file
 TEMPLATE_PATH="./terragrunt.hcl.template"
-OUTPUT_PATH="./${MODULE_PATH}/terragrunt.hcl"
+OUTPUT_PATH="./terragrunt.hcl"
 
 # Verify that the template file exists in the root directory
 if [ ! -f "$TEMPLATE_PATH" ]; then

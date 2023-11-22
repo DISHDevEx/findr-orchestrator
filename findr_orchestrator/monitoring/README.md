@@ -1,1 +1,1 @@
-M&M - Management & Monitoring
+Monitoring

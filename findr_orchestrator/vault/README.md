@@ -27,22 +27,22 @@ kubectl create namespace vault
 Run the following command in your terminal to create a .hcl with required source and initialize Terraform and download the required providers:
 
 ```shell
-./terragrunt.sh "./findr_orchestrator/vault/main.tf"
-terraform init
+export TERRAGRUNT_SOURCE="./findr_orchestrator/vault"
+./terragrunt.sh "/main.tf" init
 ```
 
 ### Step 2: Plan Deployment
 Execute the following command to preview the actions Terraform will perform:
 
 ```shell
-terraform plan
+./terragrunt.sh "/main.tf" plan
 ```
 
 ### Step 3: Apply Configuration
 Apply the Terraform configuration to deploy Vault:
 
 ```shell
-terraform apply
+./terragrunt.sh "/main.tf" apply
 ```
 
 ### Step 4: Access Vault

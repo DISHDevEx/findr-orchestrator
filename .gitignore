@@ -15,4 +15,3 @@ Thumbs.db
 .terraform.lock.hcl
 .terragrunt-cache/
 *.tfvars
-*.hcl

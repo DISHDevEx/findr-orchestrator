@@ -5,13 +5,15 @@ Terragrunt configuration for all modules.
 locals {
   backend_vars = jsondecode(read_tfvars_file("./terraform.tfvars"))
 }
-
-#Terraform source
+  
 terraform {
-  source = "$(TERRAGRUNT_SOURCE)"
+  ##source = "./findr_orchestrator/cluster" 
+  source = "./findr_orchestrator/orchestrator/namespace"
+  ##source = "./findr_orchestrator/vault"
+  ##source = "./findr_orchestrator/harbor"
+  ##source = "./findr_orchestrator/orchestrator/pod"
 }
 
-  
 #Providers
 /*
 For the following provider variables, values can be assigned through 'terraform.tfvars' file or they can be via Hashicorp Vault data source.
@@ -30,18 +32,12 @@ generate "provider" {
   path      = "provider.tf"
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
+
 provider "aws" {
   region  = var.aws_region
   profile = var.profile
 }
-provider "kubernetes"{
-  config_path    = var.kube_config
-}
-provider "helm"{
-  kubernetes {
-    config_path = var.kube_config
-  }
-}
+
 /*
 provider "vault" {
   address         = var.vault_address

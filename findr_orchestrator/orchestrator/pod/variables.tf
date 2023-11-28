@@ -1,24 +1,27 @@
-variable "namespace_name" {
+variable "aws_region" {
+  description = "AWS region name"
+  type        = string
+  default     = "us-east-1"
+}
+
+variable "profile" {
+  description = "AWS account - credentials profile name"
+  type        = string
+  default     = null
+  sensitive   = true
+}
+
+variable "cluster_name" {
   type    = string
   default = ""
 }
 
-variable "pod_name" {
+variable "vault_secret_path" {
   type    = string
   default = ""
 }
 
-variable "app" {
-  type    = string
-  default = ""
-}
-
-variable "container_image" {
-  type    = string
-  default = ""
-}
-
-variable "container_name" {
+variable "harbor_image" {
   type    = string
   default = ""
 }

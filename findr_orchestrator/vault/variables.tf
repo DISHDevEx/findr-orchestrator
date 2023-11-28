@@ -1,4 +1,3 @@
-#Namespace variables
 variable "aws_region" {
   description = "AWS region name"
   type        = string
@@ -15,9 +14,4 @@ variable "profile" {
 variable "cluster_name" {
   type    = string
   default = ""
-}
-
-variable "namespaces" {
-  type = list(string)
-  description = "List of namespaces to create"
 }

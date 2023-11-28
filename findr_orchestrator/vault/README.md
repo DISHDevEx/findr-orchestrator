@@ -17,32 +17,24 @@ This Terraform script deploys [HashiCorp Vault](https://www.vaultproject.io/), a
 ## Setup and Deployment
 
 ### Step 1: Initialization
-Update local kubectl config file
-
-```shell
-aws eks --region us-east-1 update-kubeconfig --name findr-utilities
-kubectl create namespace vault
-```
-
 Run the following command in your terminal to create a .hcl with required source and initialize Terraform and download the required providers:
 
 ```shell
-export TERRAGRUNT_SOURCE="./findr_orchestrator/vault"
-./terragrunt.sh "main.tf" init
+terragrunt init
 ```
 
 ### Step 2: Plan Deployment
 Execute the following command to preview the actions Terraform will perform:
 
 ```shell
-./terragrunt.sh "main.tf" plan
+terragrunt plan -var-file="./findr.vars"
 ```
 
 ### Step 3: Apply Configuration
 Apply the Terraform configuration to deploy Vault:
 
 ```shell
-./terragrunt.sh "main.tf" apply
+terragrunt apply -var-file="./findr.vars"
 ```
 
 ### Step 4: Access Vault

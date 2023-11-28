@@ -70,6 +70,5 @@ remote_state {
     key            = local.backend_vars.backend_bucket_key
     encrypt        = true
     dynamodb_table = local.backend_vars.backend_dynamodb_table_name
-    kube_config    = local.backend_vars.kube_config
   }
 }

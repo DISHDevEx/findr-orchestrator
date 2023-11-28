@@ -28,21 +28,21 @@ Run the following command in your terminal to create a .hcl with required source
 
 ```shell
 export TERRAGRUNT_SOURCE="./findr_orchestrator/harbor"
-./terragrunt.sh "/main.tf" init
+./terragrunt.sh "main.tf" init
 ```
 
 ### Step 2: Plan Deployment
 Execute the following command to preview the actions Terraform will perform:
 
 ```shell
-./terragrunt.sh "/main.tf" plan -var-file="./findr.tfvars"
+./terragrunt.sh "main.tf" plan -var-file="./findr.tfvars"
 ```
 
 ### Step 3: Apply Configuration
 Apply the Terraform configuration to deploy Harbor:
 
 ```shell
-./terragrunt.sh "/main.tf" apply -var-file="./findr.tfvars"
+./terragrunt.sh "main.tf" apply -var-file="./findr.tfvars"
 ```
 
 ### Step 4: Access Harbor

@@ -19,7 +19,7 @@ module "findr-orchestrator" {
   eks_cluster_name                             = var.eks_cluster_name_1
   eks_node_group_name                          = var.eks_node_group_name_1
   eks_node_capacity_type                       = "ON_DEMAND"
-  eks_node_instance_types                      = [var.eks_node_instance_types]
+  eks_node_instance_types                      = [var.eks_node_instance_types_2]
   eks_node_desired_size                        = 2
   eks_node_max_size                            = 3
   eks_node_min_size                            = 1
@@ -42,7 +42,7 @@ module "findr-edge" {
   eks_cluster_name                             = var.eks_cluster_name_2
   eks_node_group_name                          = var.eks_node_group_name_2
   eks_node_capacity_type                       = "ON_DEMAND"
-  eks_node_instance_types                      = [var.eks_node_instance_types]
+  eks_node_instance_types                      = [var.eks_node_instance_types_1]
   eks_node_desired_size                        = 2
   eks_node_max_size                            = 3
   eks_node_min_size                            = 1

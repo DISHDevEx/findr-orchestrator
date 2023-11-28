@@ -26,6 +26,4 @@ fi
 sed "s|\${TERRAGRUNT_SOURCE}|$TERRAGRUNT_SOURCE|" "$TEMPLATE_PATH" > "$OUTPUT_PATH"
 
 # Navigate to the module directory and run the Terragrunt command
-cd "$MODULE_PATH"
 terragrunt $TERRAGRUNT_COMMAND "$@"
-cd - # Return to the original directory

@@ -128,7 +128,14 @@ variable "eks_node_group_name_2" {
   sensitive   = true
 }
 
-variable "eks_node_instance_types" {
+variable "eks_node_instance_types_1" {
+  description = "instance types"
+  type        = string
+  default     = null
+  sensitive   = true
+}
+
+variable "eks_node_instance_types_2" {
   description = "instance types"
   type        = string
   default     = null

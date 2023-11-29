@@ -9,7 +9,6 @@ locals {
 terraform {
   source = "main.tf"
 }
-  
 
 #Providers
 /*
@@ -34,6 +33,13 @@ provider "aws" {
   region  = var.aws_region
   profile = var.profile
 }
+/*
+provider "vault" {
+  address         = var.vault_address
+  skip_tls_verify = true
+  token           = var.vault_token
+} 
+*/
 EOF
 }
 

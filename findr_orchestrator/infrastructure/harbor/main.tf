@@ -19,7 +19,6 @@ resource "helm_release" "harbor" {
   repository = "https://helm.goharbor.io"
   chart      = "harbor"
   namespace  = "harbor"  # Adjust as needed
-  version    = "1.7.0"
 
   set {
     name  = "expose.type"

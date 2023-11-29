@@ -8,6 +8,9 @@ data "aws_eks_cluster_auth" "cluster" {
 
 
 provider "helm" {
+  experiments {
+    manifest = true
+  }
   kubernetes {
     host                   = data.aws_eks_cluster.cluster.endpoint
     cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
@@ -23,7 +26,7 @@ resource "helm_release" "vault" {
   namespace  = "vault"
 
   set {
-    name  = "server.ha.enabled"
+    name  = "server.dev.enabled"
     value = "true"
   }
 
@@ -32,20 +35,25 @@ resource "helm_release" "vault" {
     value = "false"
   }
 
-  set {
-    name  = "server.resources.limits.cpu"
-    value = "500m"
-  }
+  # set {
+  #   name  = "server.ha.replicaCount"
+  #   value = "2"
+  # }
 
-  set {
-    name  = "server.resources.limits.memory"
-    value = "512Mi"
-  }
+  # set {
+  #   name  = "server.resources.limits.cpu"
+  #   value = "500m"
+  # }
 
-  set {
-  name  = "server.service.type"
-  value = "ClusterIP"
-  }
+  # set {
+  #   name  = "server.resources.limits.memory"
+  #   value = "512Mi"
+  # }
+
+  # set {
+  # name  = "server.service.type"
+  # value = "ClusterIP"
+  # }
 
   # set {
   #   name  = "server.storage.consul.address"
@@ -55,11 +63,6 @@ resource "helm_release" "vault" {
   # set {
   #   name  = "injector.enabled"
   #   value = "true"
-  # }
-
-  # set {
-  #   name  = "server.ha.replicaCount"
-  #   value = "3"
   # }
 
   # set {

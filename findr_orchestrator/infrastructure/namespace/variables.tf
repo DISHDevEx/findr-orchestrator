@@ -1,25 +1,25 @@
 #Namespace variables
 variable "cluster_name" {
   type    = string
-  default = "iot-findr-orchestrator"
+  default = ""
 }
 
 variable "namespace_1" {
   type = string
-  default = "vault"
+  default = ""
 }
 
 variable "namespace_2" {
   type = string
-  default = "harbor"
+  default = ""
 }
 
 variable "namespace_3" {
   type = string
-  default = "monitoring"
+  default = ""
 }
 
 variable "namespace_4" {
   type = string
-  default = "orchestrator"
+  default = ""
 }

@@ -1,10 +1,10 @@
 variable "cluster_name" {
   type    = string
-  default = "iot-findr-orchestrator"
+  default = ""
 }
 
 variable "harbor_password" {
   type    = string
-  default = "admin"
+  default = ""
   sensitive  = true
 }

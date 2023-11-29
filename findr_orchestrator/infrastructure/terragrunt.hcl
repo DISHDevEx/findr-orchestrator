@@ -7,7 +7,7 @@ locals {
 }
   
 terraform {
-  source = "./main.tf"
+  source = "main.tf"
 }
   
 

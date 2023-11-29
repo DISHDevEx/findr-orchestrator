@@ -3,7 +3,6 @@
 One stop shop to deploy all the required cloud infrastructure and services to make FINDR operational in minutes. This comprehensive setup includes 
 - Harbor: An open-source registry that secures artifacts with policies and role-based access control, ensuring images are scanned and free from vulnerabilities.
 - Vault: A tool for securely accessing secrets, Vault manages and controls access to tokens, passwords, certificates, API keys, and other secrets in modern computing.
-- Flux: A GitOps toolkit for Kubernetes, ensuring that the state of your clusters matches the configuration in git and automatically updates when there's any change.
 - M&M: An In-House Monitoring and Management Stack
 Each of these services plays a crucial role and together, these tools integrate seamlessly to provide a robust and secure FINDR platform.
 

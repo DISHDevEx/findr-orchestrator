@@ -27,14 +27,24 @@ resource "helm_release" "vault" {
     value = "true"
   }
 
-  # set {
-  #   name  = "server.ha.replicaCount"
-  #   value = "3"
-  # }
-
   set {
     name  = "global.tlsDisable"
     value = "false"
+  }
+
+  set {
+    name  = "server.resources.limits.cpu"
+    value = "500m"
+  }
+
+  set {
+    name  = "server.resources.limits.memory"
+    value = "512Mi"
+  }
+
+  set {
+  name  = "server.service.type"
+  value = "ClusterIP"
   }
 
   # set {
@@ -47,14 +57,10 @@ resource "helm_release" "vault" {
   #   value = "true"
   # }
 
-  set {
-    name  = "server.resources.limits.cpu"
-    value = "500m"
-  }
-  set {
-    name  = "server.resources.limits.memory"
-    value = "512Mi"
-  }
+  # set {
+  #   name  = "server.ha.replicaCount"
+  #   value = "3"
+  # }
 
   # set {
   #   name  = "secrets.autoUnseal.awsKms.region"
@@ -65,4 +71,25 @@ resource "helm_release" "vault" {
   #   name  = "secrets.autoUnseal.awsKms.keyId"
   #   value = "your-aws-kms-key-id"
   # }
+}
+
+resource "kubernetes_service" "vault_service" {
+  metadata {
+    name = "vault-service"
+    labels = {
+      app = "vault"
+    }
+  }
+
+  spec {
+    selector = {
+      app = "helm_release.vault.metadata.0.name"
+    }
+    port {
+      port        = 8080       # Vault HTTP port
+      target_port = 8080
+    }
+
+    type = "ClusterIP"  # Or NodePort, LoadBalancer as per your requirement
+  }
 }

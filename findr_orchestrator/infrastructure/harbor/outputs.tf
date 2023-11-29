@@ -13,6 +13,11 @@ output "eks_cluster_auth_token" {
   description = "The auth token for accessing the EKS cluster."
 }
 
+output "harbor_namespace" {
+  value       = helm_release.harbor.namespace
+  description = "The Kubernetes namespace where Vault is deployed."
+}
+
 output "harbor_helm_release_status" {
   value       = helm_release.harbor.status
   description = "The status of the Helm release for Harbor."
@@ -26,9 +31,4 @@ output "harbor_service_name" {
 output "harbor_service_http_port" {
   value       = kubernetes_service.harbor_service.spec[0].port[0].port
   description = "The HTTP port for the Harbor service."
-}
-
-output "harbor_service_https_port" {
-  value       = kubernetes_service.harbor_service.spec[0].port[1].port
-  description = "The HTTPS port for the Harbor service."
 }

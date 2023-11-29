@@ -27,3 +27,13 @@ output "vault_helm_chart" {
   value       = helm_release.vault.chart
   description = "The name and version of the Vault Helm chart deployed."
 }
+
+output "vault_service_name" {
+  value       = kubernetes_service.vault_service.metadata[0].name
+  description = "The name of the Kubernetes service for Vault."
+}
+
+output "vault_service_http_port" {
+  value       = kubernetes_service.vault_service.spec[0].port[0].port
+  description = "The HTTP port for the Vault service."
+}

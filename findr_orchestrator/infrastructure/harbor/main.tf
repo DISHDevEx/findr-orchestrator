@@ -19,6 +19,7 @@ resource "helm_release" "harbor" {
   repository = "https://helm.goharbor.io"
   chart      = "harbor"
   namespace  = "harbor"  # Adjust as needed
+  version    = "1.7.0"
 
   set {
     name  = "expose.type"
@@ -53,10 +54,6 @@ resource "kubernetes_service" "harbor_service" {
     port {
       port        = 80       # Harbor HTTP port
       target_port = 80
-    }
-    port {
-      port        = 443      # Harbor HTTPS port
-      target_port = 443
     }
 
     type = "ClusterIP"  # Or NodePort, LoadBalancer as per your requirement

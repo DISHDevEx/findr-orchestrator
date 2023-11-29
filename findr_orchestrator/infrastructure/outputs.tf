@@ -1,14 +1,20 @@
-# Output for EKS Module
-output "findr_clusters" {
-  value       = module.eks[*]
-  description = "The ID of the EKS cluster."
+
+#eks_cluster - module output
+output "findr_orchestrator_details" {
+  description = "Cluster details"
+  value      = module.findr-orchestrator[*]
+}
+
+output "findr_edge_details" {
+  description = "Cluster details"
+  value      = module.findr-edge[*]
 }
 
 # Output for Namespace Module
 # This assumes your namespace module outputs something like the namespace name or ID
 output "findr_namespaces" {
   value       = module.namespace[*]
-  description = "The ID of the created Kubernetes namespace."
+  description = "The names of created Kubernetes namespace."
 }
 
 # # Output for Monitoring Module
@@ -23,6 +29,7 @@ output "findr_namespaces" {
 output "findr_vault" {
   value       = module.vault[*]
   description = "The URL for the deployed Vault instance."
+  sensitive = true
 }
 
 # Output for Harbor Module
@@ -30,4 +37,5 @@ output "findr_vault" {
 output "findr_harbor" {
   value       = module.harbor[*]
   description = "The URL for the deployed Harbor instance."
+  sensitive = true
 }

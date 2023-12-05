@@ -61,6 +61,6 @@ module "vault" {
   source       = "./vault"
 }
 
-# module "harbor" {
-#   source       = "./harbor"
-# }
+module "harbor" {
+  source       = "./harbor"
+}

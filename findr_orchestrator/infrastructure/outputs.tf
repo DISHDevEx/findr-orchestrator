@@ -34,8 +34,8 @@ output "findr_vault" {
 
 # Output for Harbor Module
 # Assuming your Harbor module outputs details like Harbor URL or status
-# output "findr_harbor" {
-#   value       = module.harbor[*]
-#   description = "The URL for the deployed Harbor instance."
-#   sensitive = true
-# }
+output "findr_harbor" {
+  value       = module.harbor[*]
+  description = "The URL for the deployed Harbor instance."
+  sensitive = true
+}

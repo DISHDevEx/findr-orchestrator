@@ -1,28 +1,18 @@
-data "aws_eks_cluster" "cluster" {
-  name = var.cluster_name
-}
-
-data "aws_eks_cluster_auth" "cluster" {
-  name = var.cluster_name
-}
-
 provider "helm" {
   kubernetes {
-    host                   = data.aws_eks_cluster.cluster.endpoint
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
-    token                  = data.aws_eks_cluster_auth.cluster.token
+    config_path = "~/.kube/config"
   }
 }
 
 resource "helm_release" "harbor" {
   name       = "harbor"
+  namespace  = var.harbor_namespace
   repository = "https://helm.goharbor.io"
   chart      = "harbor"
-  namespace  = "harbor"  # Adjust as needed
 
   set {
     name  = "expose.type"
-    value = "ClusterIP"  # Or NodePort, LoadBalancer as per your requirement
+    value = "NodeIP"
   }
 
   set {
@@ -32,29 +22,11 @@ resource "helm_release" "harbor" {
 
   set {
     name  = "harborAdminPassword"
-    value = var.harbor_password  # Replace with a strong password
+    value = var.harbor_password
   }
 
-  # Additional Harbor configurations...
-}
-
-resource "kubernetes_service" "harbor_service" {
-  metadata {
-    name = "harbor-service"
-    labels = {
-      app = "harbor"
-    }
-  }
-
-  spec {
-    selector = {
-      app = "helm_release.harbor.metadata.0.name"
-    }
-    port {
-      port        = 80       # Harbor HTTP port
-      target_port = 80
-    }
-
-    type = "ClusterIP"  # Or NodePort, LoadBalancer as per your requirement
+  set {
+    name  = "expose.tls.auto.commonName"
+    value = var.tls_auto_common_name
   }
 }

@@ -12,6 +12,11 @@ provider "kubernetes" {
   token                  = data.aws_eks_cluster_auth.cluster.token
 }
 
+
+# provider "kubernetes" {
+#   config_path = "~/.kube/config"
+# }
+
 resource "kubernetes_namespace" "orchestrator" {
   metadata {
     name = var.namespace_1
@@ -34,4 +39,5 @@ resource "kubernetes_namespace" "harbor" {
   metadata {
     name = var.namespace_4
   }
+  
 }

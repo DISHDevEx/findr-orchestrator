@@ -1,91 +1,65 @@
-
-data "aws_eks_cluster" "cluster" {
-  name = var.cluster_name
-}
-
-data "aws_eks_cluster_auth" "cluster" {
-  name = var.cluster_name
-}
-
-
 provider "kubernetes" {
-  host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
+  config_path = "~/.kube/config"
 }
 
-
-
-# Fetch data from Vault (assuming Vault provider is set up)
-data "vault_generic_secret" "config" {
-  path = var.vault_secret_path
-}
-
-# Kubernetes ConfigMap from Vault data
-resource "kubernetes_config_map" "app_config" {
-  metadata {
-    name = "app-config"
-  }
-
-  data = {
-    "config.json" = data.vault_generic_secret.config.data_json
+ provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
   }
 }
 
-# Kubernetes Deployment using image from Harbor
-resource "kubernetes_deployment" "my_app" {
+resource "kubernetes_service_account" "app" {
   metadata {
-    name = "my-app"
+    name      = "vault-auth"
+    namespace =  kubernetes_namespace.app.metadata[0].name
+  }
+
+  automount_service_account_token = true
+}
+
+resource "kubernetes_namespace" "app" {
+  metadata {
+    name = var.namespace
+  }
+}
+
+resource "kubernetes_deployment" "example" {
+  metadata {
+    name = "findr-app"
+    namespace = kubernetes_namespace.app.metadata[0].name
+    labels = {
+      name = "findr-app"
+    }
   }
 
   spec {
-    replicas = 1
+    replicas = 2
+
     selector {
       match_labels = {
-        app = "my-app"
+        name = "findr-app"
       }
     }
 
     template {
       metadata {
         labels = {
-          app = "my-app"
+          name = "findr-app"
+        }
+        annotations = {
+          "vault.hashicorp.com/agent-inject": "true"
+          "vault.hashicorp.com/agent-inject-secret-mydbpassword": "secrets/myproject/dbpassword"
+          "vault.hashicorp.com/role": "app-reader"
         }
       }
 
       spec {
+        service_account_name = kubernetes_service_account.app.metadata[0].name
         container {
-          image = var.harbor_image
-          name  = "app"
-
-          env_from {
-            config_map_ref {
-              name = kubernetes_config_map.app_config.metadata[0].name
-            }
-          }
+          image = "nginx:1.7.8"
+          name  = "findr-app"
         }
       }
     }
-  }
-}
-
-# Kubernetes Service to expose the app
-resource "kubernetes_service" "my_app_service" {
-  metadata {
-    name = "my-app-service"
-  }
-
-  spec {
-    selector = {
-      app = "my-app"
-    }
-
-    port {
-      protocol    = "TCP"
-      port        = 80
-      target_port = 3000
-    }
-
-    type = "ClusterIP"
   }
 }

@@ -1,7 +1,7 @@
-output "eks_cluster_endpoint" {
-  value       = data.aws_eks_cluster.cluster.endpoint
-  description = "The endpoint for the EKS cluster."
-}
+# output "eks_cluster_endpoint" {
+#   value       = data.aws_eks_cluster.cluster.endpoint
+#   description = "The endpoint for the EKS cluster."
+# }
 
 output "orchestrator_namespace" {
   value       = kubernetes_namespace.orchestrator.metadata[0].name

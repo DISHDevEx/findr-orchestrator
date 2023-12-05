@@ -1,79 +1,45 @@
-data "aws_eks_cluster" "cluster" {
-  name = var.cluster_name
+provider "kubernetes" {
+  # Configuration for the Kubernetes provider
+  config_path = "~/.kube/config"
 }
-
-data "aws_eks_cluster_auth" "cluster" {
-  name = var.cluster_name
-}
-
 
 provider "helm" {
   experiments {
     manifest = true
   }
   kubernetes {
-    host                   = data.aws_eks_cluster.cluster.endpoint
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
-    token                  = data.aws_eks_cluster_auth.cluster.token
+    config_path = "~/.kube/config"
   }
 }
 
+resource "helm_release" "consul" {
+  name       = "consul"
+  namespace  = var.vault_namespace
+  repository = "https://helm.releases.hashicorp.com"
+  chart      = "consul"
+  ## version    = "0.34.1"
+
+  set {
+    name  = "global.name"
+    value = "consul"
+  }
+
+  # Additional configurations can be added here
+}
 
 resource "helm_release" "vault" {
   name       = "vault"
+  namespace  = var.vault_namespace
   repository = "https://helm.releases.hashicorp.com"
   chart      = "vault"
-  namespace  = "vault"
+  ## version    = "0.13.0"
 
   set {
     name  = "server.dev.enabled"
     value = "true"
   }
 
-  set {
-    name  = "global.tlsDisable"
-    value = "false"
-  }
-
-  # set {
-  #   name  = "server.ha.replicaCount"
-  #   value = "2"
-  # }
-
-  # set {
-  #   name  = "server.resources.limits.cpu"
-  #   value = "500m"
-  # }
-
-  # set {
-  #   name  = "server.resources.limits.memory"
-  #   value = "512Mi"
-  # }
-
-  # set {
-  # name  = "server.service.type"
-  # value = "ClusterIP"
-  # }
-
-  # set {
-  #   name  = "server.storage.consul.address"
-  #   value = "consul-consul-server:8500"
-  # }
-
-  # set {
-  #   name  = "injector.enabled"
-  #   value = "true"
-  # }
-
-  # set {
-  #   name  = "secrets.autoUnseal.awsKms.region"
-  #   value = "us-west-2"
-  # }
-
-  # set {
-  #   name  = "secrets.autoUnseal.awsKms.keyId"
-  #   value = "your-aws-kms-key-id"
-  # }
+  # Additional configurations can be added here
 }
 
 resource "kubernetes_service" "vault_service" {

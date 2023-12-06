@@ -18,3 +18,9 @@ Thumbs.db
 *.tfvars
 *.tfstate
 *.tfstate.backup
+
+#Orchestrator
+package-lock.json
+node_modules
+dist/
+.env

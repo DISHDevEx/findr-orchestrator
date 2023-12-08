@@ -58,3 +58,67 @@ module "findr-s3" {
   pass_bucket_policy_file = var.pass_bucket_policy_file
   bucket_policy_file_path = var.bucket_policy_file_path
 }
+
+# CoreDNS add-on for findr cluster
+resource "aws_eks_addon" "findr_coredns" {
+  cluster_name = "iot-findr"
+  addon_name   = "coredns"
+  addon_version= "v1.10.1-eksbuild.2"
+  depends_on   = [module.findr]
+}
+
+# kube-proxy add-on for findr cluster
+resource "aws_eks_addon" "findr_kube_proxy" {
+  cluster_name = "iot-findr"
+  addon_name   = "kube-proxy"
+  addon_version= "v1.28.1-eksbuild.1"
+  depends_on   = [module.findr]
+}
+
+# Amazon VPC CNI add-on for findr cluster
+resource "aws_eks_addon" "findr_vpc_cni" {
+  cluster_name = "iot-findr"
+  addon_name   = "vpc-cni"
+  addon_version= "v1.14.1-eksbuild.1"
+  depends_on   = [module.findr]
+}
+
+# Amazon EBS CSI Driver add-on for findr cluster
+resource "aws_eks_addon" "findr_ebs_csi" {
+  cluster_name = "iot-findr"
+  addon_name   = "aws-ebs-csi-driver"
+  addon_version= "v1.25.0-eksbuild.1"
+  depends_on   = [module.findr]
+}
+
+# CoreDNS add-on for findr-edge cluster
+resource "aws_eks_addon" "findr_edge_coredns" {
+  cluster_name = "iot-findr-edge"
+  addon_name   = "coredns"
+  addon_version= "v1.10.1-eksbuild.2"
+  depends_on   = [module.findr-edge]
+}
+
+# kube-proxy add-on for findr-edge cluster
+resource "aws_eks_addon" "findr_edge_kube_proxy" {
+  cluster_name = "iot-findr-edge"
+  addon_name   = "kube-proxy"
+  addon_version= "v1.28.1-eksbuild.1"
+  depends_on   = [module.findr-edge]
+}
+
+# Amazon VPC CNI add-on for findr-edge cluster
+resource "aws_eks_addon" "findr_edge_vpc_cni" {
+  cluster_name = "iot-findr-edge"
+  addon_name   = "vpc-cni"
+  addon_version= "v1.14.1-eksbuild.1"
+  depends_on   = [module.findr-edge]
+}
+
+# Amazon EBS CSI Driver add-on for findr-edge cluster
+resource "aws_eks_addon" "findr_edge_ebs_csi" {
+  cluster_name = "iot-findr-edge"
+  addon_name   = "aws-ebs-csi-driver"
+  addon_version= "v1.25.0-eksbuild.1"
+  depends_on   = [module.findr-edge]
+}

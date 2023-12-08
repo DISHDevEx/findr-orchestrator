@@ -1,7 +1,7 @@
 /**
- * Output details of findr-orchestrator module
+ * Output details of findr eks module
 */
-output "findr_orchestrator_details" {
+output "findr_eks_details" {
 
   /**
    * Description of output
@@ -9,9 +9,9 @@ output "findr_orchestrator_details" {
   description = "Cluster details"
 
   /**
-   * Value from findr-orchestrator module
+   * Value from findr eks module
    */
-  value = module.findr-orchestrator[*]
+  value = module.findr[*]
 
 }
 
@@ -19,7 +19,7 @@ output "findr_orchestrator_details" {
 /**
  * Output details of findr-edge module
 */ 
-output "findr_edge_details" {
+output "findr_edge_eks_details" {
 
   /**
    * Description of output
@@ -48,5 +48,7 @@ output "findr_s3_details" {
    * Value from findr-edge module
    */
   value = module.findr-s3[*]
+
+  sensitive = true
 
 }

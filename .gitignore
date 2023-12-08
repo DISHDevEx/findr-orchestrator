@@ -19,6 +19,7 @@ terraform.tfvars
 findr.tfvars
 *.tfstate
 *.tfstate.backup
+*.tfstate.lock.info
 
 #Orchestrator
 package-lock.json

@@ -38,7 +38,7 @@ resource "kubernetes_namespace" "harbor" {
 
 # Kubernetes Namespace Resource: UI
 # Creates a Kubernetes namespace for UI, with the name sourced from a variable.
-resource "kubernetes_namespace" "UI" {
+resource "kubernetes_namespace" "ui" {
   metadata {
     name = var.namespace_5
   }  

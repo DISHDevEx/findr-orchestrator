@@ -49,6 +49,7 @@ Update your local kubectl config file to address cluster named iot-findr:
 aws eks --region us-east-1 update-kubeconfig --name iot-findr
 aws eks --region us-east-1 describe-cluster --name iot-findr --query cluster.status
 ```
+Start with creating namespaces for findr microservices
 
 ### Step 1: Initialization
 

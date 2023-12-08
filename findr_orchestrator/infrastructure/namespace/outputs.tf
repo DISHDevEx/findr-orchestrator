@@ -51,7 +51,7 @@ output "oracle_namespace" {
 # Output: apollo Namespace
 # Provides the name of the Apollo Kubernetes namespace.
 # This output can be used in configurations that require the namespace of the Apollo service.
-output "harbor_namespace" {
+output "apollo_namespace" {
   value       = kubernetes_namespace.apollo.metadata[0].name
   description = "The name of the Apollo Kubernetes namespace."
 }

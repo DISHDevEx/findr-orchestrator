@@ -41,12 +41,19 @@ terragrunt apply -var-file="./findr.tfvars"
 
 ## Deployment of FINDR microservices
 
-### Step 1: Initialization
-
-Navigate to the required microservice folder in infrastructure directory and initialize terragrunt:
+Update your local kubectl config file to address cluster named iot-findr:
 
 ```shell
-cd findr_orchestrator/<microservice_folder>
+aws eks --region us-east-1 update-kubeconfig --name iot-findr
+aws eks --region us-east-1 describe-cluster --name iot-findr --query cluster.status
+```
+
+### Step 1: Initialization
+
+Navigate to the required microservice folder in infrastructure directory and initialize terraform:
+
+```shell
+cd findr_orchestrator/infrastructure/<microservice_folder>
 terraform init
 ```
 
@@ -58,7 +65,7 @@ terraform plan
 ```
 
 ### Step 3: Apply Configuration
-Apply the Terraform configuration to deploy required services
+Apply the Terraform configuration to deploy required services:
 
 ```shell
 terraform apply

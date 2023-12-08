@@ -122,3 +122,29 @@ variable "eks_node_instance_types_2" {
   default     = null
   sensitive   = true
 }
+
+#findr s3 variables
+variable "bucket_name" {
+  description = "s3 bucket"
+  type        = string
+  default     = "findr"
+  sensitive   = true
+}
+variable "bucket_versioning" {
+  description = "version"
+  type        = string
+  default     = "Enabled"
+  sensitive   = true
+}
+variable "pass_bucket_policy_file" {
+  description = "policy"
+  type        = string
+  default     = false
+  sensitive   = true
+}
+variable "bucket_policy_file_path" {
+  description = "policy file"
+  type        = string
+  default     = null
+  sensitive   = true
+}

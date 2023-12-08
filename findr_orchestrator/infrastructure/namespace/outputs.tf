@@ -32,10 +32,27 @@ output "harbor_namespace" {
   description = "The name of the Harbor Kubernetes namespace."
 }
 
-# Uncomment the following section if you need to output the EKS cluster endpoint.
-# Output: EKS Cluster Endpoint
-# Provides the endpoint for the EKS cluster, useful for configurations that need to connect to the cluster.
-# output "eks_cluster_endpoint" {
-#   value       = data.aws_eks_cluster.cluster.endpoint
-#   description = "The endpoint for the EKS cluster."
-# }
+# Output: UI Namespace
+# Provides the name of the UI Kubernetes namespace.
+# This output can be used in configurations that require the namespace of the UI service.
+output "ui_namespace" {
+  value       = kubernetes_namespace.ui.metadata[0].name
+  description = "The name of the UI Kubernetes namespace."
+}
+
+# Output: oracle Namespace
+# Provides the name of the oracle Kubernetes namespace.
+# This output can be used in configurations that require the namespace of the oracle service.
+output "oracle_namespace" {
+  value       = kubernetes_namespace.oracle.metadata[0].name
+  description = "The name of the Oracle Kubernetes namespace."
+}
+
+# Output: apollo Namespace
+# Provides the name of the Apollo Kubernetes namespace.
+# This output can be used in configurations that require the namespace of the Apollo service.
+output "harbor_namespace" {
+  value       = kubernetes_namespace.apollo.metadata[0].name
+  description = "The name of the Apollo Kubernetes namespace."
+}
+

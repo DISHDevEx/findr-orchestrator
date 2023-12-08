@@ -1,32 +1,33 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import { writeFile } from 'fs/promises';
-import { exec } from 'child_process';
-import util from 'util';
+import { orchestrator } from './orchestrator';
 
-const execAsync = util.promisify(exec);
+/**
+ * Initializes and configures the Express application.
+ */
 const app = express();
-app.use(bodyParser.json());
+const port = 3000;
 
-app.post('/deploy', async (req, res) => {
-  try {
-    const { terraformConfig } = req.body;
+/**
+ * POST endpoint to trigger Terraform deployment.
+ */
+app.post('/deploy', (req, res) => {
+    const authHeader = req.headers.authorization;
 
-    await writeFile('./terraform/main.tf.json', JSON.stringify(terraformConfig));
-
-    const { stdout, stderr } = await execAsync('terragrunt apply -auto-approve', { cwd: 'path/to/terragrunt/config' });
-    if (stderr) {
-      throw new Error(stderr);
+    // Simple token-based authentication
+    if (authHeader !== 'Bearer YourSecretToken') {
+        return res.status(401).send('Unauthorized');
     }
 
-    res.json({ terragruntOutput: stdout });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: error.message });
-  }
+    try {
+        const configurationPath = '../terraform';
+        orchestrator.applyConfiguration(configurationPath);
+        res.send('Terraform apply triggered');
+    } catch (error) {
+        res.status(500).send('Error triggering Terraform apply');
+    }
 });
 
-const PORT = 4000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// Start the Express server
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });

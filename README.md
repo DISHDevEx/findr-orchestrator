@@ -1,25 +1,34 @@
 # FINDR Orchestrator
+
 ## Introduction
-One stop shop to deploy all the required cloud infrastructure and services to make FINDR operational in minutes. This comprehensive setup includes 
-- Harbor: An open-source registry that secures artifacts with policies and role-based access control, ensuring images are scanned and free from vulnerabilities.
-- Vault: A tool for securely accessing secrets, Vault manages and controls access to tokens, passwords, certificates, API keys, and other secrets in modern computing.
-- M&M: An In-House Monitoring and Management Stack
-Each of these services plays a crucial role and together, these tools integrate seamlessly to provide a robust and secure FINDR platform.
+
+The FINDR Orchestrator is your comprehensive solution to deploy essential cloud infrastructure and services swiftly, making FINDR fully operational in minutes. This setup encompasses a suite of integral components:
+
+- **Apollo**:
+- **Harbor**: An advanced open-source registry securing artifacts with policies and role-based access control. It ensures that images are scanned and free from vulnerabilities.
+- **Monitoring**: A robust In-House Monitoring and Management Stack.
+- **Oracle**:
+- **Orchestrator**:
+- **Vault**: Specialized in secure access to secrets, Vault adeptly manages tokens, passwords, certificates, API keys, and other essential secrets.
+- **FINDR User Interface**: 
+
+Together, these components form a cohesive and secure ecosystem for FINDR.
 
 ## Prerequisites
-- AWS CLI configured with appropriate permissions.
-- Terraform, Terragrunt and Helm installed on your local machine.
-- Basic knowledge of Terraform, Terragrunt, Helm, Kubernetes, and AWS.
 
-## Configuration Files
-- `main.tf`: The main Terraform configuration file for deploying the FINDR Orchestrator.
-- `variables.tf`: Contains all the variables used in the Terraform configuration, allowing for customization.
-- `outputs.tf`: Defines the outputs of the Terraform configuration, such as service endpoints and access keys.
-- `terragrunt.hcl`: Terragrunt configuration file for additional infrastructure management capabilities.
+Before starting, ensure you have the following prerequisites installed and configured:
+- Git
+- Terraform (Version X.X.X or above)
+- Terragrunt
+- Cloud provider credentials (e.g., AWS Access Key)
+- Node.js (Version X.X.X or above)
+- NPM
 
-## Setup and Deployment
-- Follow service specific readme for seameless deployment.
-- After successful deployment, the FINDR app is ready to use and will be accessible through the provided URL.
+With these prerequisites in place, you are all set to initialize and deploy FINDR.
 
-## Customization
-You can customize the deployment by modifying the `main.tf`, `variables.tf`, `outputs.tf`, and `terragrunt.hcl` files. This includes changing settings and configurations to meet specific requirements.
+### Subdirectories Overview
+
+- **[Infrastructure](./findr_orchestrator/infrastructure/README.md)**: Contains Terraform scripts for infrastructure setup.
+- **[Orchestrator](./findr_orchestrator/orchestrator/README.md)**: Contains the source code for the Orchestrator service.
+
+For in-depth details on each component, refer to the README files within their respective directories.

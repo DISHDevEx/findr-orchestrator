@@ -1,0 +1,13 @@
+#findr values
+existing_subnet_route_table_id=
+existing_vpc_id=
+existing_subnet_ids_1=
+existing_subnet_ids_2=
+existing_eks_iam_role_arn=
+existing_node_group_iam_role_arn=
+eks_cluster_name_1=
+eks_cluster_name_2=
+eks_node_group_name_1=
+eks_node_group_name_2=
+eks_node_instance_types_1=
+eks_node_instance_types_2=

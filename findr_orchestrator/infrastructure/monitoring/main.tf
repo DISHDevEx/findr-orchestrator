@@ -34,7 +34,7 @@ provider "kubernetes" {
 
 provider "helm" {
   kubernetes {
-    config_path = "/Users/rizwan.bhatty/.kube/config"
+    config_path = "~/.kube/config"
   }
 }
 

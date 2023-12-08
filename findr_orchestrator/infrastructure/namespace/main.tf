@@ -35,3 +35,27 @@ resource "kubernetes_namespace" "harbor" {
     name = var.namespace_4
   }  
 }
+
+# Kubernetes Namespace Resource: UI
+# Creates a Kubernetes namespace for UI, with the name sourced from a variable.
+resource "kubernetes_namespace" "UI" {
+  metadata {
+    name = var.namespace_5
+  }  
+}
+
+# Kubernetes Namespace Resource: oracle
+# Creates a Kubernetes namespace for oracle, with the name sourced from a variable.
+resource "kubernetes_namespace" "oracle" {
+  metadata {
+    name = var.namespace_6
+  }  
+}
+
+# Kubernetes Namespace Resource: apollo
+# Creates a Kubernetes namespace for apollo, with the name sourced from a variable.
+resource "kubernetes_namespace" "apollo" {
+  metadata {
+    name = var.namespace_7
+  }  
+}

@@ -3,7 +3,7 @@ Terraform configurations for all findr clusters.
 */
 
 ##EKS module
-##findr-orchestrator
+##findr
 module "findr" {
   source                                       = "git@github.com:DISHDevEx/iot.git//aws/modules/eks_cluster"
   flag_use_existing_vpc                        = true
@@ -49,18 +49,12 @@ module "findr-edge" {
   eks_node_max_unavailable                     = 1
 }
 
-module "namespace" {
-  source       = "./namespace/main.tf"
-}
 
-module "monitoring" {
-  source       = "./monitoring/main.tf"
-}
-
-module "vault" {
-  source       = "./vault/main.tf"
-}
-
-module "harbor" {
-   source       = "./harbor/main.tf"
+#S3 module
+module "findr-s3" {
+  source                  = "git@github.com:DISHDevEx/iot.git//aws/modules/s3"
+  bucket_name             = var.bucket_name
+  bucket_versioning       = var.bucket_versioning
+  pass_bucket_policy_file = var.pass_bucket_policy_file
+  bucket_policy_file_path = var.bucket_policy_file_path
 }

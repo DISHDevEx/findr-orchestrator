@@ -41,3 +41,27 @@ variable "namespace_4" {
   type    = string
   default = "harbor"
 }
+
+/**
+ * Namespace for UI
+*/
+variable "namespace_5" {
+  type    = string
+  default = "ui"
+}
+
+/**
+ * Namespace for Oracle
+*/
+variable "namespace_6" {
+  type    = string
+  default = "oracle"
+}
+
+/**
+ * Namespace for Apollo
+*/
+variable "namespace_7" {
+  type    = string
+  default = "apollo"
+}

@@ -10,9 +10,10 @@ Each component has its own set of Terraform files (`main.tf`, `variables.tf`, `o
 
 ## Prerequisites
 
-Before proceeding, ensure you have Terraform and Terragrunt installed on your system.
+- Install Terraform and Terragrunt per your machine
+- Install AWS CLI by following the instructions mentioned on this page and ensure to configure the respective account credentials
 
-## Deployment EKS and S3 resources
+## EKS and S3 resources Deployment
 
 ### Step 1: Initialization
 
@@ -38,6 +39,7 @@ Apply the Terraform configuration to deploy EKS cluster and s3 bucket:
 ```shell
 terragrunt apply -var-file="./findr.tfvars"
 ```
+
 
 ## Deployment of FINDR microservices
 

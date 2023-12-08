@@ -1,5 +1,21 @@
+/**
+ * Namespace for Vault services
+*/
 variable "vault_namespace" {
-  description = "The Kubernetes namespace where Harbor is deployed"
-  type        = string
-  default     = "vault"
+
+  /**
+   * Description of what the namespace is used for
+   */
+  description = "The Kubernetes namespace where Vault is deployed"
+
+  /**
+   * Variable type
+   */
+  type = string
+
+  /**
+   * Default namespace
+   */ 
+  default = "vault"
+
 }

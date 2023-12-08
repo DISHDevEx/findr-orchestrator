@@ -4,7 +4,7 @@ Terraform configurations for all findr clusters.
 
 ##EKS module
 ##findr-orchestrator
-module "findr-orchestrator" {
+module "findr" {
   source                                       = "git@github.com:DISHDevEx/iot.git//aws/modules/eks_cluster"
   flag_use_existing_vpc                        = true
   existing_vpc_id                              = var.existing_vpc_id
@@ -50,17 +50,17 @@ module "findr-edge" {
 }
 
 module "namespace" {
-  source       = "./namespace"
+  source       = "./namespace/main.tf"
 }
 
-# module "monitoring" {
-#    source       = "./monitoring"
-# }
+module "monitoring" {
+  source       = "./monitoring/main.tf"
+}
 
 module "vault" {
-  source       = "./vault"
+  source       = "./vault/main.tf"
 }
 
 module "harbor" {
-   source       = "./harbor"
+   source       = "./harbor/main.tf"
 }

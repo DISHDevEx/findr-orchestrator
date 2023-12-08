@@ -1,48 +1,109 @@
-provider "kubernetes" {
-  # Configuration for the Kubernetes provider
-  config_path = "~/.kube/config"
-}
-
+/**
+ * Configure Helm provider for deploying Helm charts
+*/
 provider "helm" {
-  experiments {
-    manifest = true
-  }
+
   kubernetes {
+
+    /**
+     * Path to kubeconfig file for Kubernetes cluster
+     */
     config_path = "~/.kube/config"
+
   }
+
 }
 
+/**
+ * Install Consul chart from HashiCorp
+*
+* This will deploy Consul in a client-server configuration.
+* See https://artifacthub.io/packages/helm/hashicorp/consul for chart documentation
+*/
 resource "helm_release" "consul" {
-  name       = "consul"
-  namespace  = var.vault_namespace
-  repository = "https://helm.releases.hashicorp.com"
-  chart      = "consul"
-  ## version    = "0.34.1"
 
+  /**
+   * Release name
+   */
+  name = "consul"  
+
+  /**
+   * Target namespace
+   */ 
+  namespace = var.vault_namespace
+
+  /**
+   * HashiCorp Helm chart repository
+   */
+  repository = "https://helm.releases.hashicorp.com"
+
+  /**
+   * Consul Helm chart
+   */
+  chart = "consul"
+
+  /** 
+   * Set global name label
+   *
+   * This sets the `name` label on all Kubernetes objects
+   */
   set {
-    name  = "global.name"
+    name = "global.name"
     value = "consul"
   }
 
-  # Additional configurations can be added here
 }
 
-resource "helm_release" "vault" {
-  name       = "vault"
-  namespace  = var.vault_namespace
-  repository = "https://helm.releases.hashicorp.com"
-  chart      = "vault"
-  ## version    = "0.13.0"
 
+/**
+ * Install Vault chart from HashiCorp
+*
+* This will deploy Vault in a dev mode for development/testing.
+* See https://artifacthub.io/packages/helm/hashicorp/vault for chart docs
+*/
+resource "helm_release" "vault" {
+
+  /**
+   * Release name  
+   */
+  name = "vault"
+
+  /**
+   * Target namespace
+   */
+  namespace = var.vault_namespace
+
+  /**
+   * HashiCorp Helm chart repository
+   */
+  repository = "https://helm.releases.hashicorp.com"
+
+  /**
+   * Vault Helm chart
+   */
+  chart = "vault"
+
+  /**
+   * Enable dev mode for easier unsealing
+   */
   set {
-    name  = "server.dev.enabled"
-    value = "true"
+    name = "server.dev.enabled"
+    value = "true" 
   }
 
-  # Additional configurations can be added here
 }
 
+
+/**
+ * Expose Vault service
+*
+* Creates a ClusterIP service for Vault
+*/
 resource "kubernetes_service" "vault_service" {
+
+  /**
+   * Service metadata
+   */
   metadata {
     name = "vault-service"
     labels = {
@@ -50,15 +111,31 @@ resource "kubernetes_service" "vault_service" {
     }
   }
 
+  /**
+   * Service spec
+   */
   spec {
+
+    /**
+     * Selector to find Vault pods
+     */
     selector = {
-      app = "helm_release.vault.metadata.0.name"
+      app = helm_release.vault.metadata[0].name
     }
+
+    /**
+     * Service port
+     */
     port {
-      port        = 8080       # Vault HTTP port
+      port        = 8080
       target_port = 8080
     }
 
-    type = "ClusterIP"  # Or NodePort, LoadBalancer as per your requirement
+    /**
+     * ClusterIP service type
+     */
+    type = "ClusterIP"
+
   }
+
 }

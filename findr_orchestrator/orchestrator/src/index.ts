@@ -19,7 +19,7 @@ app.post('/deploy', (req, res) => {
     }
 
     try {
-        const configurationPath = '../terraform';
+        const configurationPath = '../k8s-resources';
         orchestrator.applyConfiguration(configurationPath);
         res.send('Terraform apply triggered');
     } catch (error) {

@@ -63,6 +63,7 @@ resource "helm_release" "consul" {
 */
 resource "helm_release" "vault" {
 
+depends_on = [ helm_release.consul]
   /**
    * Release name  
    */
@@ -86,6 +87,7 @@ resource "helm_release" "vault" {
   /**
    * Enable dev mode for easier unsealing
    */
+
   set {
     name = "server.dev.enabled"
     value = "true" 
@@ -94,16 +96,7 @@ resource "helm_release" "vault" {
 }
 
 
-/**
- * Expose Vault service
-*
-* Creates a ClusterIP service for Vault
-*/
 resource "kubernetes_service" "vault_service" {
-
-  /**
-   * Service metadata
-   */
   metadata {
     name = "vault-service"
     labels = {
@@ -111,31 +104,15 @@ resource "kubernetes_service" "vault_service" {
     }
   }
 
-  /**
-   * Service spec
-   */
   spec {
-
-    /**
-     * Selector to find Vault pods
-     */
     selector = {
-      app = helm_release.vault.metadata[0].name
+      app = "helm_release.vault.metadata.0.name"
     }
-
-    /**
-     * Service port
-     */
     port {
-      port        = 8080
+      port        = 8080       # Vault HTTP port
       target_port = 8080
     }
 
-    /**
-     * ClusterIP service type
-     */
-    type = "ClusterIP"
-
+    type = "NodePort"  # Or NodePort, LoadBalancer as per your requirement
   }
-
 }

@@ -1,31 +1,20 @@
-# outputs.tf
-
-/**
- * The endpoint URL of the deployed Harbor instance
- */
-output "harbor_endpoint" {
-  description = "The endpoint URL of Harbor instance"
-
-  # Construct the endpoint URL assuming standard DNS naming conventions
-  value = "https://${var.harbor_namespace}.svc.cluster.local"
+/** 
+Output for LoadBalancer IP
+This output provides instructions on how to retrieve the external IP address of the LoadBalancer.
+This external IP is used to access the Harbor UI and API.
+**/
+output "harbor_url" {
+  description = "Instruction to find the external IP address of Harbor's LoadBalancer"
+  value       = "Use 'kubectl get svc -n harbor -o wide' to find the external IP address of Harbor's LoadBalancer service."
 }
 
 /** 
- * The namespace where Harbor was installed
-*/
-output "harbor_namespace" {
-  description = "Namespace where Harbor was installed"
-
-  value = var.harbor_namespace
-}
-
-/**
- * The password for the main Harbor admin user 
- */
+Output for Harbor's Admin Password
+This output reveals the admin password set for Harbor.
+It is marked as sensitive to prevent it from being displayed in Terraform's standard output.
+**/
 output "harbor_admin_password" {
-  description = "Password for the main admin user of Harbor"
-
-  value = var.harbor_password
-
-  sensitive = true
+  description = "The admin password for Harbor"
+  value       = var.harbor_password
+  sensitive   = true
 }

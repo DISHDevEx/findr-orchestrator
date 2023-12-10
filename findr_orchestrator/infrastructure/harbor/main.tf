@@ -36,7 +36,7 @@ resource "helm_release" "harbor" {
 
   set {
     name  = "expose.type"
-    value = "nodePort"
+    value = "loadBalancer"
   }
 
   set {  
@@ -50,18 +50,23 @@ resource "helm_release" "harbor" {
   }
 
   set {
+    name  = "database.type"
+    value = "internal"  # Using internal database
+  }
+
+  set {
+    name  = "redis.type"
+    value = "internal"  # Using internal Redis
+  }
+
+  set {
     name  = "expose.tls.enabled"
-    value = true 
+    value = "true"  # Enable TLS
   }
 
   set {
-    name  = "expose.tls.secretName"
-    value = "harbor-tls"
-  }
-
-  set {
-    name = "expose.tls.auto.commonName"
-    value = var.tls_auto_common_name
+    name  = "expose.tls.auto.commonName"
+    value = "harbor.findr"  # Replace with your domain or placeholder
   }
 
 }

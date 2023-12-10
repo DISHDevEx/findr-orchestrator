@@ -7,14 +7,6 @@ output "vault_url" {
 }
 
 /**
- * Consul release name
-*/ 
-output "consul_release_name" {
-  description = "Name of the Consul release"
-  value = helm_release.consul.name
-}
-
-/**
  * Vault release name
 */
 output "vault_release_name" {

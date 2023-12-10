@@ -1,118 +1,51 @@
 /**
- * Configure Helm provider for deploying Helm charts
-*/
+ * Configure Helm provider for deploying Helm charts in Kubernetes.
+ * This provider setup uses a kubeconfig file located at "~/.kube/config".
+ */
 provider "helm" {
-
   kubernetes {
-
-    /**
-     * Path to kubeconfig file for Kubernetes cluster
-     */
     config_path = "~/.kube/config"
-
   }
-
 }
 
 /**
- * Install Consul chart from HashiCorp
-*
-* This will deploy Consul in a client-server configuration.
-* See https://artifacthub.io/packages/helm/hashicorp/consul for chart documentation
-*/
-resource "helm_release" "consul" {
-
-  /**
-   * Release name
-   */
-  name = "consul"  
-
-  /**
-   * Target namespace
-   */ 
-  namespace = var.vault_namespace
-
-  /**
-   * HashiCorp Helm chart repository
-   */
-  repository = "https://helm.releases.hashicorp.com"
-
-  /**
-   * Consul Helm chart
-   */
-  chart = "consul"
-
-  /** 
-   * Set global name label
-   *
-   * This sets the `name` label on all Kubernetes objects
-   */
-  set {
-    name = "global.name"
-    value = "consul"
-  }
-
-}
-
-
-/**
- * Install Vault chart from HashiCorp
-*
-* This will deploy Vault in a dev mode for development/testing.
-* See https://artifacthub.io/packages/helm/hashicorp/vault for chart docs
-*/
+ * Deploy Vault using the Helm chart from HashiCorp.
+ * 
+ * This deployment sets up Vault in a high availability configuration with Raft storage backend.
+ * It also enables the Vault UI and exposes it using a LoadBalancer service.
+ * 
+ * Variables:
+ * - `server.ha.enabled`: Enables high availability mode.
+ * - `server.ha.raft.enabled`: Enables Raft integrated storage used in HA mode.
+ * - `server.ui.enabled`: Enables the Vault web UI.
+ * - `server.service.type`: Configures the service type, set to LoadBalancer to expose Vault externally.
+ */
 resource "helm_release" "vault" {
+  # Uncomment the line below if Vault depends on a Consul deployment.
+  # depends_on = [helm_release.consul]
 
-depends_on = [ helm_release.consul]
-  /**
-   * Release name  
-   */
-  name = "vault"
-
-  /**
-   * Target namespace
-   */
-  namespace = var.vault_namespace
-
-  /**
-   * HashiCorp Helm chart repository
-   */
-  repository = "https://helm.releases.hashicorp.com"
-
-  /**
-   * Vault Helm chart
-   */
-  chart = "vault"
-
-  /**
-   * Enable dev mode for easier unsealing
-   */
+  name       = "vault"             // Name of the Helm release
+  namespace  = var.vault_namespace // Kubernetes namespace to deploy Vault in
+  repository = "https://helm.releases.hashicorp.com" // Helm chart repository URL
+  chart      = "vault"             // Name of the Helm chart
 
   set {
-    name = "server.dev.enabled"
-    value = "true" 
+    name  = "server.ha.enabled"
+    value = "true" // Enable HA mode
   }
 
+  set {
+    name  = "server.ha.raft.enabled"
+    value = "true" // Enable Raft storage backend for HA
+  }
+
+  set {
+    name  = "server.ui.enabled"
+    value = "true" // Enable Vault UI
+  }
+
+  set {
+    name  = "server.service.type"
+    value = "LoadBalancer" // Expose Vault using a LoadBalancer service
+  }
 }
-
-
-# resource "kubernetes_service" "vault_service" {
-#   metadata {
-#     name = "vault-service"
-#     labels = {
-#       app = "vault"
-#     }
-#   }
-
-#   spec {
-#     selector = {
-#       app = "helm_release.vault.metadata.0.name"
-#     }
-#     port {
-#       port        = 8080       # Vault HTTP port
-#       target_port = 8080
-#     }
-
-#     type = "NodePort"  # Or NodePort, LoadBalancer as per your requirement
-#   }
-# }

@@ -96,23 +96,23 @@ depends_on = [ helm_release.consul]
 }
 
 
-resource "kubernetes_service" "vault_service" {
-  metadata {
-    name = "vault-service"
-    labels = {
-      app = "vault"
-    }
-  }
+# resource "kubernetes_service" "vault_service" {
+#   metadata {
+#     name = "vault-service"
+#     labels = {
+#       app = "vault"
+#     }
+#   }
 
-  spec {
-    selector = {
-      app = "helm_release.vault.metadata.0.name"
-    }
-    port {
-      port        = 8080       # Vault HTTP port
-      target_port = 8080
-    }
+#   spec {
+#     selector = {
+#       app = "helm_release.vault.metadata.0.name"
+#     }
+#     port {
+#       port        = 8080       # Vault HTTP port
+#       target_port = 8080
+#     }
 
-    type = "NodePort"  # Or NodePort, LoadBalancer as per your requirement
-  }
-}
+#     type = "NodePort"  # Or NodePort, LoadBalancer as per your requirement
+#   }
+# }

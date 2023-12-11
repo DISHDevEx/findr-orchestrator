@@ -149,9 +149,3 @@ resource "kubernetes_config_map" "fluent_bit_cluster_info" {
     "logs.region"     = "us-east-1"
   }
 }
-
-# Output: Module Path
-# Exposes the path of the module as an output variable.
-output "module_path" {
-  value = path.module
-}

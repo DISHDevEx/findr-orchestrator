@@ -14,8 +14,6 @@ variable "storage_type" {
 variable "bucket_name" {
 
   type = string
-
-  default = "iot-findr"
 }
 
 /**
@@ -24,8 +22,6 @@ variable "bucket_name" {
 variable "s3_endpoint" {
 
   type = string
-
-  default = ""
 }
 
 /**

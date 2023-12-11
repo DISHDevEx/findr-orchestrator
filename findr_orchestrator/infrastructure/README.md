@@ -23,21 +23,21 @@ Navigate to the infrastructure directory and initialize Terragrunt:
 
 ```shell
 cd findr_orchestrator/infrastructure
-terragrunt init
+terraform init
 ```
 
 ### Step 2: Plan Deployment
 Execute the following command to preview the actions Terraform will perform:
 
 ```shell
-terragrunt plan -var-file="./findr.tfvars"
+terraform plan -var-file="./findr.tfvars"
 ```
 
 ### Step 3: Apply Configuration
 Apply the Terraform configuration to deploy EKS cluster and s3 bucket:
 
 ```shell
-terragrunt apply -var-file="./findr.tfvars"
+terraform apply -var-file="./findr.tfvars"
 ```
 
 

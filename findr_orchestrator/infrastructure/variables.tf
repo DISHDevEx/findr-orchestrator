@@ -127,7 +127,7 @@ variable "eks_node_instance_types_2" {
 variable "bucket_name" {
   description = "s3 bucket"
   type        = string
-  default     = "findr"
+  default     = "dish-findr"
   sensitive   = true
 }
 variable "bucket_versioning" {

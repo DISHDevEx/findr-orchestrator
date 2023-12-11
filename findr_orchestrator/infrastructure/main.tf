@@ -2,6 +2,11 @@
 Terraform configurations for all findr clusters.
 */
 
+provider "aws" {
+  region  = var.aws_region
+  profile = var.profile
+}
+
 ##EKS module
 ##findr
 module "findr" {

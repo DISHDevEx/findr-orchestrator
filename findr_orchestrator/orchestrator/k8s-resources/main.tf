@@ -1,28 +1,40 @@
-/**
- * Kubernetes provider configuration.
- */
+# main.tf
+
 provider "kubernetes" {
-  host                   = var.k8s_cluster_endpoint
-  client_certificate     = file(var.client_certificate_path)
-  client_key             = file(var.client_key_path)
-  cluster_ca_certificate = file(var.cluster_ca_certificate_path)
+  config_path = var.cluster_config
 }
 
-/**
- * Kubernetes pod resource definition.
- */
-resource "kubernetes_pod" "example" {
+data "kubernetes_namespace" "findr_existing_namespace" {
   metadata {
-    name = "example-pod"
+    name = var.namespace
+  }
+  depends_on = [provider.kubernetes]
+}
+
+locals {
+  namespace_exists = data.kubernetes_namespace.existing.metadata.0.name == var.namespace
+}
+
+resource "kubernetes_namespace" "findr_new_namespace" {
+  count = local.namespace_exists ? 0 : 1
+  metadata {
+    name = var.namespace
+  }
+}
+
+resource "kubernetes_pod" "findr_pod" {
+  metadata {
+    name      = var.pod_name
+    namespace = var.namespace
     labels = {
-      app = "example"
+      app = var.pod_name
     }
   }
 
   spec {
     container {
       image = var.container_image
-      name  = "example-container"
+      name  = var.pod_name
     }
   }
 }

@@ -20,7 +20,8 @@ output "cluster_name" {
  * URL to access Grafana dashboard
 */
 output "grafana_url" {
-  value = helm_release.loki_stack.manifest.values.grafana.service.type == "LoadBalancer" ? helm_release.loki_stack.manifest.values.grafana.service.loadBalancerIP : null
+  description = "Instruction to find the external IP address of Grafana's LoadBalancer"
+  value       = "Use 'kubectl get svc -n monitoring -o wide' to find the external IP address of Grafana's LoadBalancer service."
 }
 
 

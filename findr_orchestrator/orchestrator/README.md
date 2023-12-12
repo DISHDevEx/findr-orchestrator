@@ -34,18 +34,13 @@ This documentation outlines a Node.js application written in TypeScript, designe
    npm install
    ```
 
-3. **Configure Terraform**:
-
-   - Navigate to the `terraform/` directory.
-   - Update the Terraform configuration files with your Kubernetes cluster details.
-
-4. **Build the TypeScript Project**:
+3. **Build the TypeScript Project**:
 
    ```bash
    npm run build
    ```
 
-5. **Running the Application**:
+4. **Running the Application**:
 
    - Locally:
      
@@ -60,7 +55,7 @@ This documentation outlines a Node.js application written in TypeScript, designe
      docker run -p 3000:3000 orchestrator
      ```
 
-6. **Accessing the API**:
+5. **Accessing the API**:
 
    - The application runs on `http://localhost:3000`.
    - To deploy resources, make a POST request to `/deploy`.

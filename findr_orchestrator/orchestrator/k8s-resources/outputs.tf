@@ -1,4 +1,9 @@
+# outputs.tf
+
 output "pod_name" {
-  description = "The name of the deployed Kubernetes pod"
-  value       = kubernetes_pod.example.metadata[0].name
+  value = var.pod_name
+}
+
+output "namespace" {
+  value = var.namespace
 }

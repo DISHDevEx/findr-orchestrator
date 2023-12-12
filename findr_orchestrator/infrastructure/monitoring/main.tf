@@ -14,7 +14,7 @@ terraform {
     }
     kubernetes = {
       source = "hashicorp/kubernetes"
-      version = "~> 1.9"
+      version = "~> 2.24.0"
     }
     helm = {
       source = "hashicorp/helm"
@@ -35,7 +35,7 @@ provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   exec {
-    api_version = "client.authentication.k8s.io/v1alpha1"
+    api_version = "client.authentication.k8s.io/v1beta1"
     command     = "aws"
     args        = ["eks", "get-token", "--region", "us-east-1", "--cluster-name", "findr-orchestrator-test"]
   }

@@ -1,25 +1,23 @@
-variable "k8s_cluster_endpoint" {
-  description = "Kubernetes API server endpoint"
-  type        = string
-}
+# variables.tf
 
-variable "client_certificate_path" {
-  description = "Path to the client certificate for Kubernetes authentication"
+variable "pod_name" {
+  description = "Name of the Kubernetes pod"
   type        = string
-}
 
-variable "client_key_path" {
-  description = "Path to the client key for Kubernetes authentication"
-  type        = string
-}
-
-variable "cluster_ca_certificate_path" {
-  description = "Path to the cluster CA certificate"
-  type        = string
 }
 
 variable "container_image" {
-  description = "The container image to use in the pod"
+  description = "Container image to use in the pod"
   type        = string
-  default     = "nginx"
+}
+
+variable "cluster_config" {
+  description = "Kubernetes cluster configuration"
+  type        = string
+}
+
+variable "namespace" {
+  description = "Kubernetes namespace"
+  type        = string
+  default     = "findr"
 }

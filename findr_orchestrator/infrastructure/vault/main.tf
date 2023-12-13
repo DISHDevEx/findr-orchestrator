@@ -59,17 +59,38 @@ resource "helm_release" "vault" {
   }
 
   set {
-    name  = "server.ui.enabled"
+    name  = "ui.enabled"
     value = "true" // Enable Vault UI
   }
 
   set {
-    name  = "server.service.type"
+    name  = "ui.serviceType"
     value = "LoadBalancer"
   }
 
-   set {
-    name  = "server.service.port"
+  set {
+    name  = "ui.servicePort"
     value = "8200"
   }
+
+  set {
+    name  = "server.ingress.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "server.ingress.hosts[0].host"
+    value = "vault-findr.com"
+  }
+  
+  set {
+    name  = "server.ingress.ingressClassName"
+    value = "nginx"
+  }
+
+  set {
+    name  = "server.route.enabled"
+    value = "true"
+  }
+
 }

@@ -4,7 +4,7 @@ import { exec } from 'child_process';
 import { writeFile } from 'fs/promises';
 
 export class Orchestrator {
-  private terraformPath = './k8s-resources';
+  private terraformPath = './k8s-resources/';
 
   async deploy(params: any): Promise<string> {
     const tfVars = {

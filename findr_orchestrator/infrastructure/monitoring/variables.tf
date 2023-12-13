@@ -14,6 +14,8 @@ variable "storage_type" {
 variable "bucket_name" {
 
   type = string
+
+  default = "dish-findr"
 }
 
 /**
@@ -22,6 +24,8 @@ variable "bucket_name" {
 variable "s3_endpoint" {
 
   type = string
+
+  default = "s3://dish-findr"
 }
 
 /**
@@ -30,6 +34,8 @@ variable "s3_endpoint" {
 variable "prefix" {
 
   type = string
+
+  default = "monitoring/iot-findr"
 }
 
 /**

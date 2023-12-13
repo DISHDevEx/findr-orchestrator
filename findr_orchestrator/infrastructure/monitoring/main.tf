@@ -10,11 +10,9 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
     }
     kubernetes = {
       source = "hashicorp/kubernetes"
-      version = "~> 2.24.0"
     }
     helm = {
       source = "hashicorp/helm"
@@ -37,7 +35,7 @@ provider "kubernetes" {
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
     command     = "aws"
-    args        = ["eks", "get-token", "--region", "us-east-1", "--cluster-name", "findr-orchestrator-test"]
+    args        = ["eks", "get-token", "--region", "us-east-1", "--cluster-name", "iot-findr"]
   }
 }
 
@@ -82,9 +80,9 @@ resource "helm_release" "kube_prometheus" {
   chart      = "kube-prometheus"
   namespace  = var.monitoring_namespace
 
-  values = [
-    data.http.custom_prom_cm.body,
-  ]
+  # values = [
+  #   data.http.custom_prom_cm.body,
+  # ]
 }
 
 # Null Resource for EKS Script Execution

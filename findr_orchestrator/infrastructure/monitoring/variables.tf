@@ -15,7 +15,7 @@ variable "bucket_name" {
 
   type = string
 
-  default = "dish-findr"
+  #default = "dish-findr"
 }
 
 /**
@@ -25,7 +25,7 @@ variable "s3_endpoint" {
 
   type = string
 
-  default = "s3://dish-findr"
+  #default = ""
 }
 
 /**
@@ -35,7 +35,7 @@ variable "prefix" {
 
   type = string
 
-  default = "monitoring/iot-findr"
+  #default = "monitoring/iot-findr"
 }
 
 /**

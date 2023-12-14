@@ -5,8 +5,10 @@ name: Docker Build and Push to Docker Hub
 on:
   push:
     branches:
-      - praveen/orchestrator-api-setup
-
+      - main
+    paths:
+      - 'Dockerfile'
+      - 'orchestrator/**'
 jobs:
   build-and-push:
     runs-on: ubuntu-latest

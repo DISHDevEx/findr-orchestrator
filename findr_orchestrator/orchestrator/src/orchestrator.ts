@@ -4,14 +4,14 @@ import { exec } from 'child_process';
 import { writeFile } from 'fs/promises';
 
 export class Orchestrator {
-  private terraformPath = './k8s-resources/';
-
+  private terraformPath = './k8s-resources';
   async deploy(params: any): Promise<string> {
     const tfVars = {
-      pod_name: params.pod_name,
-      container_image: params.container_image,
       cluster_config: params.cluster_config,
       namespace: params.namespace,
+      pod_name: params.pod_name,
+      pod_port: params.pod_port,
+      container_image: params.container_image,
     };
 
     await this.createTfVarsFile(tfVars);
@@ -37,5 +37,17 @@ export class Orchestrator {
       console.error(`File write error: ${error}`);
       throw error;
     }
+  }
+
+  async getClusterConfig(): Promise<any> {
+    // Logic to fetch cluster configuration
+    // This could be reading from a secure source, environment variables, etc.
+    const clusterConfig = {
+      // Example data structure
+      clusterName: process.env.CLUSTER_NAME,
+      clusterRegion: process.env.CLUSTER_REGION
+      // Do not include sensitive data like credentials or full kubeconfig
+    };
+    return clusterConfig;
   }
 }

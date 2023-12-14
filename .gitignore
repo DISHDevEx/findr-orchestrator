@@ -15,6 +15,7 @@ Thumbs.db
 .terraform.lock.hcl
 .terragrunt-cache/
 .terraform/
+terraform.tfvars.json
 terraform.tfvars
 findr.tfvars
 *.tfstate

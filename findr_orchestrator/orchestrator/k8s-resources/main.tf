@@ -1,34 +1,26 @@
-# main.tf
 
+
+# Kubernetes Provider Configuration
+# ---------------------------------
 provider "kubernetes" {
-  config_path = var.cluster_config
+  # Configures the Kubernetes provider with the path to the kubeconfig file.
+  config_path = var.kubeconfig_path
 }
 
-data "kubernetes_namespace" "findr_existing_namespace" {
-  metadata {
-    name = var.namespace
-  }
-  depends_on = [provider.kubernetes]
-}
-
-locals {
-  namespace_exists = data.kubernetes_namespace.existing.metadata.0.name == var.namespace
-}
-
-resource "kubernetes_namespace" "findr_new_namespace" {
-  count = local.namespace_exists ? 0 : 1
+# Kubernetes Namespace Resource
+# -----------------------
+resource "kubernetes_namespace" "monitoring" {
   metadata {
     name = var.namespace
   }
 }
 
+# Kubernetes Pod Resource
+# -----------------------
 resource "kubernetes_pod" "findr_pod" {
   metadata {
     name      = var.pod_name
     namespace = var.namespace
-    labels = {
-      app = var.pod_name
-    }
   }
 
   spec {
@@ -36,5 +28,23 @@ resource "kubernetes_pod" "findr_pod" {
       image = var.container_image
       name  = var.pod_name
     }
+  }
+}
+
+# Kubernetes Load Balancer Service
+# --------------------------------
+resource "kubernetes_service" "findr_lb" {
+  metadata {
+    name = "${var.pod_name}-lb"
+  }
+  spec {
+    selector = {
+      app = var.pod_name
+    }
+    port {
+      port        = var.pod_port
+      target_port = var.pod_port
+    }
+    type = "LoadBalancer"
   }
 }

@@ -61,12 +61,12 @@ resource "helm_release" "harbor" {
 
   set {
     name  = "expose.tls.enabled"
-    value = "true"  # Enable TLS
+    value = "false"  # Enable TLS
   }
 
   set {
     name  = "expose.tls.auto.commonName"
-    value = "harbor.findr"  # Replace with your domain or placeholder
+    value = "harbor.findR.com"  # Replace with your domain or placeholder
   }
 
 }

@@ -1,6 +1,6 @@
 # Define Variables
 # ----------------
-variable "kubeconfig_path" {
+variable "cluster_config" {
   description = "The path to the kubeconfig file."
   type        = string
 }
@@ -22,5 +22,10 @@ variable "container_image" {
 
 variable "pod_port" {
   description = "The portfor the pod."
+  type        = string
+}
+
+variable "loadbalancer" {
+  description = "The loadbalancer for the pod."
   type        = string
 }

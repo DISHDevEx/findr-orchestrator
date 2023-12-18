@@ -7,7 +7,7 @@ This documentation outlines a Node.js application written in TypeScript, designe
 - `src/`: Contains the TypeScript source code.
   - `index.ts`: The main Express server application.
   - `orchestrator.ts`: Class responsible for executing Terraform commands.
-- `terraform/`: Holds Terraform configuration files for Kubernetes resource deployment.
+  - `k8s-resources/`: Holds Terraform configuration files for Kubernetes resource deployment.
 - `Dockerfile`: Docker configuration for containerizing the Node.js application.
 - `package.json`: Defines Node.js project dependencies.
 - `tsconfig.json`: TypeScript compiler configuration.
@@ -48,16 +48,9 @@ This documentation outlines a Node.js application written in TypeScript, designe
      npm start
      ```
 
-   - Using Docker:
-     
-     ```bash
-     docker build -t orchestrator .
-     docker run -p 3000:3000 orchestrator
-     ```
-
 5. **Accessing the API**:
 
-   - The application runs on `http://localhost:3000`.
+   - The application runs on `http://localhost:5000`.
    - To deploy resources, make a POST request to `/deploy`.
 
 ## Usage
@@ -65,5 +58,14 @@ This documentation outlines a Node.js application written in TypeScript, designe
 The application exposes a `/deploy` endpoint to trigger Terraform deployments. To deploy your Kubernetes resources:
 
 ```bash
-curl -X POST http://localhost:3000/deploy -H "Authorization: Bearer YourSecretToken"
+curl -X POST http://localhost:5000/deploy \    
+-H "Content-Type: application/json" \
+-d '{
+    "cluster_config": "",
+    "namespace": "",
+    "pod_name": "",
+    "pod_port": 5001,
+    "container_image": "",
+    "fidnr_loadbalancer": ""
+}'
 ```

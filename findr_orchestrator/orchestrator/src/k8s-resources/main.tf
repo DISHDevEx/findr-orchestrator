@@ -1,18 +1,8 @@
-
-
 # Kubernetes Provider Configuration
 # ---------------------------------
 provider "kubernetes" {
   # Configures the Kubernetes provider with the path to the kubeconfig file.
-  config_path = var.kubeconfig_path
-}
-
-# Kubernetes Namespace Resource
-# -----------------------
-resource "kubernetes_namespace" "monitoring" {
-  metadata {
-    name = var.namespace
-  }
+  config_path = var.cluster_config
 }
 
 # Kubernetes Pod Resource
@@ -35,7 +25,8 @@ resource "kubernetes_pod" "findr_pod" {
 # --------------------------------
 resource "kubernetes_service" "findr_lb" {
   metadata {
-    name = "${var.pod_name}-lb"
+    name = var.loadbalancer
+    namespace = var.namespace
   }
   spec {
     selector = {

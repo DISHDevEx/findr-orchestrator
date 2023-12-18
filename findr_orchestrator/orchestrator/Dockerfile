@@ -23,10 +23,10 @@ RUN wget https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz \
 FROM node:16
 
 # Set the working directory inside the Docker image
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy the package.json and package-lock.json files into our working directory
-COPY package*.json ./
+COPY findr_orchestrator/orchestrator/package*.json .
 
 # Install dependencies
 RUN npm install
@@ -34,7 +34,7 @@ RUN npm install
 RUN npm run build
 
 # Copy the rest of the application source code
-COPY . .
+COPY findr_orchestrator/orchestrator/ .
 
 # Copy Terraform and Helm from the tools stage
 COPY --from=tools /usr/bin/terraform /usr/bin/terraform

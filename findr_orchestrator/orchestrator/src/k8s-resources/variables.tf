@@ -5,8 +5,8 @@ variable "cluster_config" {
   type        = string
 }
 
-variable "pod_name" {
-  description = "The name of the Kubernetes pod."
+variable "cluster_name" {
+  description = "The Cluster Name"
   type        = string
 }
 
@@ -20,12 +20,18 @@ variable "container_image" {
   type        = string
 }
 
-variable "pod_port" {
-  description = "The portfor the pod."
+variable "vault_address" {
+  description = "Vault base URL"
   type        = string
 }
 
-variable "loadbalancer" {
-  description = "The loadbalancer for the pod."
+variable "vault_token" {
+  description = "Vault auth token"
   type        = string
 }
+
+variable "connection_info" {
+  description = "Connection details for device"
+  type        = string
+}
+

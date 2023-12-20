@@ -68,8 +68,8 @@ resource "kubernetes_service" "oracle_service" {
 
     port {
       protocol   = "TCP"
-      port       = 8080
-      target_port = 8080
+      port       = 6000
+      target_port = 6000
     }
 
     type = "LoadBalancer"

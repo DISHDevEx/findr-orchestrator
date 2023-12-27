@@ -9,12 +9,15 @@ ENV TERRAFORM_VERSION=1.6.5
 RUN apk add --update wget unzip \
     && wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
     && unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/bin \
-    && rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
-    && apk add --no-cache aws-cli
+    && rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 # Stage 2: Setup the Node.js environment
 # Specify the base image. Here, we're using Node 16. You can choose the version that matches your application's requirements.
 FROM node:16
+
+# Install AWS CLI
+# Node.js images are based on Debian, so we use apt-get to install the AWS CLI
+RUN apt-get update && apt-get install -y awscli python3
 
 # Set the working directory inside the Docker image
 WORKDIR /app

@@ -1,5 +1,28 @@
 # Define Variables
 # ----------------
+
+/**
+ * The Kubernetes region where ui will be deployed
+*/
+variable "cluster_region" {
+
+  /**
+   * Description of aws region
+   */
+  description = "Default region"
+
+  /**
+   * Variable type
+   */
+  type = string
+
+  /**
+   * Default aws region
+   */ 
+  default = "us-east-1"
+
+}
+
 variable "cluster_config" {
   description = "The path to the kubeconfig file."
   type        = string

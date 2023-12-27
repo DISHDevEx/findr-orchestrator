@@ -2,16 +2,17 @@
 
 import { exec } from 'child_process';
 import { writeFile } from 'fs/promises';
-import axios from 'axios';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 export class Orchestrator {
   private terraformPath = './src/k8s-resources/';
   async deploy(params: any): Promise<string> {
     
     const tfVars = {
-      vault_address:params.vault_address,
-      vault_token:params.vault_token,
+      vault_address: process.env.VAULT_ADDRESS,
+      vault_token: process.env.VAULT_TOKEN,
       cluster_config: params.cluster_config,
       cluster_name: params.cluster_name,
       connection_info: params.connection_info,
@@ -34,7 +35,6 @@ export class Orchestrator {
       });
     });
   }
-
 
   private async createTfVarsFile(tfVars: any): Promise<void> {
     try {

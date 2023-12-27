@@ -30,7 +30,6 @@ COPY findr_orchestrator/orchestrator/ ./
 
 # Copy Terraform from the tools stage
 COPY --from=tools /usr/bin/terraform /usr/bin/terraform
-COPY --from=tools /usr/bin/aws /usr/bin/aws
 
 # Install dependencies
 RUN npm install

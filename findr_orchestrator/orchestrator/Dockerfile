@@ -5,13 +5,12 @@ FROM alpine:3.14 as tools
 # Set Terraform and Helm versions
 ENV TERRAFORM_VERSION=1.6.5
 
-# Install Terraform
+# Install Terraform & aws cli
 RUN apk add --update wget unzip \
     && wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
     && unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/bin \
-    && rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-
-RUN apk add --no-cache aws-cli
+    && rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
+    && apk add --no-cache aws-cli
 
 # Stage 2: Setup the Node.js environment
 # Specify the base image. Here, we're using Node 16. You can choose the version that matches your application's requirements.
@@ -28,6 +27,7 @@ COPY findr_orchestrator/orchestrator/ ./
 
 # Copy Terraform from the tools stage
 COPY --from=tools /usr/bin/terraform /usr/bin/terraform
+COPY --from=tools /usr/bin/aws /usr/bin/aws
 
 # Install dependencies
 RUN npm install

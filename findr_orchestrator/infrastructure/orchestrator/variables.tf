@@ -65,7 +65,7 @@ variable "cluster_name" {
 }
 
 /**
- * The Kubernetes cluter name where ui will be deployed
+ * Vault Address
 */
 variable "vault_address" {
 
@@ -87,7 +87,7 @@ variable "vault_address" {
 }
 
 /**
- * The Kubernetes cluter name where ui will be deployed
+ * Vault Token
 */
 variable "vault_token" {
 
@@ -100,4 +100,27 @@ variable "vault_token" {
    * Variable type
    */
   type = string
+}
+
+
+/**
+ * Container Image info
+*/
+variable "container_inage" {
+
+  /**
+   * Vault Token
+   */
+  description = "container image from dockerhub"
+
+  /**
+   * Variable type
+   */
+  type = string
+
+   /**
+   * Default container image
+   */ 
+  default = "docker.io/pravnreddy429/findr_orchestrator:v1"
+
 }

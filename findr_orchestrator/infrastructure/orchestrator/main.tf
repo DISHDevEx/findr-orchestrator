@@ -45,7 +45,7 @@ resource "kubernetes_pod" "orchestrator_pod" {
 
   spec {
     container {
-      image = "docker.io/pravnreddy429/findr_orchestrator:v0"
+      image = var.container_image
       name  = "orchestrator"
 
       volume_mount {

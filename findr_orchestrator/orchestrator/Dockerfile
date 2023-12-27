@@ -11,6 +11,8 @@ RUN apk add --update wget unzip \
     && unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/bin \
     && rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
+RUN apk add --no-cache aws-cli
+
 # Stage 2: Setup the Node.js environment
 # Specify the base image. Here, we're using Node 16. You can choose the version that matches your application's requirements.
 FROM node:16

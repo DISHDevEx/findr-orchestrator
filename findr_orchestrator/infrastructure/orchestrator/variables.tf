@@ -106,7 +106,7 @@ variable "vault_token" {
 /**
  * Container Image info
 */
-variable "container_inage" {
+variable "container_image" {
 
   /**
    * Vault Token

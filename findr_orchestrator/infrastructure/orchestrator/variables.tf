@@ -28,7 +28,7 @@ variable "aws_region" {
   /**
    * Description of aws region
    */
-  description = ""
+  description = "Default region"
 
   /**
    * Variable type

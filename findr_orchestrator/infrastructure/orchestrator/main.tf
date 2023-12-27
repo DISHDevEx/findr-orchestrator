@@ -30,8 +30,8 @@ resource "kubernetes_secret" "env_secret" {
 
   data = {
     ".env" = <<-EOT
-      VAULT_ADDRESS= var.vault_address
-      VAULT_TOKEN= var.vault_token
+      VAULT_ADDRESS= ${var.vault_address}
+      VAULT_TOKEN= ${var.vault_token}
     EOT
   }
 }

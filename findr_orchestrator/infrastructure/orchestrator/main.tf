@@ -39,14 +39,14 @@ resource "kubernetes_secret" "env_secret" {
 # Kubernetes Pod Resource
 resource "kubernetes_pod" "orchestrator_pod" {
   metadata {
-    name      = "orchestrator"
+    name      = "orchestrator-pod"
     namespace = var.namespace
   }
 
   spec {
     container {
       image = var.container_image
-      name  = "orchestrator"
+      name  = "orchestrator-conatiner"
 
       volume_mount {
         mount_path = "app/.env"
@@ -69,13 +69,13 @@ resource "kubernetes_pod" "orchestrator_pod" {
 # Kubernetes Load Balancer Service
 resource "kubernetes_service" "orchestrator_lb" {
   metadata {
-    name      = "orchestrator"
+    name      = "orchestrator-lb"
     namespace = var.namespace
   }
 
   spec {
     selector = {
-      app = "orchestrator"
+      app = "orchestrator-pod"
     }
     port {
       protocol    = "TCP"

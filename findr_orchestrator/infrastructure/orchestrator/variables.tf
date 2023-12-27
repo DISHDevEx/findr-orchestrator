@@ -79,11 +79,6 @@ variable "vault_address" {
    */
   type = string
 
-  /**
-   * Default vault_address
-   */ 
-  default = "http://localhost:8200"
-
 }
 
 /**

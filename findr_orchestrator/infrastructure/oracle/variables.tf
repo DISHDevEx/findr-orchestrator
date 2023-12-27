@@ -19,11 +19,11 @@ variable "nginx_image" {
 variable "nginx_container_port" {
   description = "Port for nginx container"
   type        = number
-  default     = 80
+  default     = 6000
 }
 
 variable "nginx_service_port" {
   description = "Port for nginx service"
   type        = number
-  default     = 80
+  default     = 6000
 }

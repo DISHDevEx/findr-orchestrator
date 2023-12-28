@@ -58,3 +58,8 @@ variable "connection_info" {
   type        = string
 }
 
+variable "service_account_name" {
+  description = "service account name"
+  type        = string
+  default = "iot-findr-edge-service-account"
+}

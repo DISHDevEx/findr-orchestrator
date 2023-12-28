@@ -1,6 +1,3 @@
-
-# Outputs
-# -------
 output "pod_name" {
   value       = kubernetes_pod.oracle_pod.metadata[0].name
   description = "The name of the deployed Kubernetes pod."

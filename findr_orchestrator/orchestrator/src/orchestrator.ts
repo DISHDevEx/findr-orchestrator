@@ -23,7 +23,9 @@ export class Orchestrator {
     await this.createTfVarsFile(tfVars);
 
     return new Promise((resolve, reject) => {
-      exec('terraform init && terraform plan && TF_LOG=DEBUG terraform apply -auto-approve', { cwd: this.terraformPath }, (error, stdout, stderr) => {
+      exec('aws eks --region us-east-1 update-kubeconfig --name iot-findr-edge \
+      && terraform init \
+      && TF_LOG=DEBUG terraform apply -auto-approve', { cwd: this.terraformPath }, (error, stdout, stderr) => {
         if (error) {
           console.error(`exec error: ${error}`);
           reject(error);

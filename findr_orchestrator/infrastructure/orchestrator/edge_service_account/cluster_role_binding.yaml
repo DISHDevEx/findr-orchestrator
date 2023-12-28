@@ -2,6 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: iot-findr-edge-cluster-role-binding
+  namespace: findr
 subjects:
   - kind: ServiceAccount
     name: iot-findr-edge-service-account

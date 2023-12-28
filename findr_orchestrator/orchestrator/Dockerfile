@@ -15,9 +15,14 @@ RUN apk add --update wget unzip \
 # Specify the base image. Here, we're using Node 16. You can choose the version that matches your application's requirements.
 FROM node:16
 
-# Install AWS CLI
-# Node.js images are based on Debian, so we use apt-get to install the AWS CLI
-RUN apt-get update && apt-get install -y awscli python3
+# Install Homebrew
+RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Add Homebrew to PATH
+ENV PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+
+# Install AWS CLI using Homebrew
+RUN brew install awscli
 
 # Set the working directory inside the Docker image
 WORKDIR /app

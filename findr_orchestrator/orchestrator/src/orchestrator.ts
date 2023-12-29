@@ -1,7 +1,6 @@
 // orchestrator.ts
-
 import { exec } from 'child_process';
-import { writeFile } from 'fs/promises';
+import { writeFile} from 'fs/promises';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -20,7 +19,12 @@ export class Orchestrator {
       container_image: params.container_image
     };
 
-    await this.createTfVarsFile(tfVars);
+    try {
+      await this.createTfVarsFile(tfVars);
+    } catch (error) {
+      console.error(`Error in deployment process: ${error}`);
+      throw error;
+    }
 
     return new Promise((resolve, reject) => {
       exec('terraform init && TF_LOG=DEBUG terraform apply -auto-approve', { cwd: this.terraformPath }, (error, stdout, stderr) => {

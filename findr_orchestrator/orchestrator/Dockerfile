@@ -31,6 +31,11 @@ ENV HOME=/home/linuxbrew
 ENV USER=linuxbrew
 ENV PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH
 
+# Grant full access to linuxbrew user
+USER root
+RUN chmod -R 777 /home/linuxbrew
+USER linuxbrew
+
 # Install Homebrew
 RUN git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew/Homebrew && \
     mkdir /home/linuxbrew/.linuxbrew/bin && \

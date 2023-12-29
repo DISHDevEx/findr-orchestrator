@@ -15,8 +15,10 @@ RUN apk add --update wget unzip \
 # Specify the base image. Here, we're using Node 16.
 FROM node:16
 
-# Install AWS CLI
-RUN apt-get update && apt-get install -y awscli=2.7.0
+# Install AWS CLI v2.7.0
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.7.0.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install
 
 # Set the working directory inside the Docker image
 WORKDIR /app

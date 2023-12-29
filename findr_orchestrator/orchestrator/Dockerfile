@@ -15,11 +15,28 @@ RUN apk add --update wget unzip \
 # Specify the base image. Here, we're using Node 16. You can choose the version that matches your application's requirements.
 FROM node:16
 
-# Install Homebrew
-RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# Install dependencies for Homebrew
+RUN apt-get update && apt-get install -y build-essential curl file git
 
-# Add Homebrew to PATH
-ENV PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+# Create a non-root user for Homebrew
+RUN useradd -m -s /bin/bash linuxbrew && \
+    usermod -aG sudo linuxbrew && \
+    mkdir -p /home/linuxbrew/.linuxbrew && \
+    chown -R linuxbrew:linuxbrew /home/linuxbrew/.linuxbrew
+
+# Switch to the non-root user
+USER linuxbrew
+
+# Set Homebrew environment variables
+ENV HOME=/home/linuxbrew
+ENV USER=linuxbrew
+ENV PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH
+
+# Install Homebrew
+RUN git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew/Homebrew && \
+    mkdir /home/linuxbrew/.linuxbrew/bin && \
+    ln -s /home/linuxbrew/.linuxbrew/Homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin && \
+    brew config
 
 # Install AWS CLI using Homebrew
 RUN brew install awscli

@@ -120,21 +120,5 @@ variable "container_image" {
 
 }
 
-variable "aws_access_key_id" {
-  description = "AWS Access key"
-  type        = string
-}
-
-variable "aws_secret_access_key" {
-  description = "AWS Secret Key"
-  type        = string
-}
-
-variable "aws_session_token" {
-  description = "AWS Session Token"
-  type        = string
-}
-
-
 
 

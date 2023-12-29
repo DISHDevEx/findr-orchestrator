@@ -1,4 +1,4 @@
-# Stage 1: Install Terraform and Helm
+# Stage 1: Install Terraform
 # Use a base image that includes necessary utilities
 FROM alpine:3.14 as tools
 
@@ -15,24 +15,8 @@ RUN apk add --update wget unzip \
 # Specify the base image. Here, we're using Node 16.
 FROM node:16
 
-# Install dependencies for Homebrew
-RUN apt-get update && apt-get install -y build-essential curl file git
-
-# Create directories for Homebrew
-RUN mkdir -p /home/linuxbrew/.linuxbrew/Homebrew /home/linuxbrew/.linuxbrew/bin
-
-# Install Homebrew
-RUN git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew/Homebrew \
-    && ln -s /home/linuxbrew/.linuxbrew/Homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin \
-    && /home/linuxbrew/.linuxbrew/bin/brew update --force --quiet \
-    && chmod -R 755 /home/linuxbrew/.linuxbrew
-
-# Set Homebrew environment variables
-ENV PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
-
-# Install AWS CLI and Terraform using Homebrew
-RUN brew install awscli \
-    && brew install terraform
+# Install AWS CLI
+RUN apt-get update && apt-get install -y awscli=2.7.0
 
 # Set the working directory inside the Docker image
 WORKDIR /app
@@ -49,6 +33,7 @@ COPY --from=tools /usr/bin/terraform /usr/bin/terraform
 # Install dependencies
 RUN npm install
 
+# Build the application
 RUN npm run build
 
 # Expose the port the app runs on

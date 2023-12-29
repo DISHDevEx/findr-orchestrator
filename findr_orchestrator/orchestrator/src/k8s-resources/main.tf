@@ -100,8 +100,6 @@ resource "kubernetes_pod" "findr_pod" {
   }
 
   spec {
-
-    service_account_name = var.service_account_name
   
     container {
       image = var.container_image

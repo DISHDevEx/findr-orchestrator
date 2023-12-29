@@ -1,46 +1,31 @@
+# Stage 1: Install Terraform and Helm
 # Use a base image that includes necessary utilities
 FROM alpine:3.14 as tools
 
-# Set Terraform and Helm versions
+# Set Terraform version
 ENV TERRAFORM_VERSION=1.6.5
 
-# Install Terraform & aws cli
+# Install Terraform
 RUN apk add --update wget unzip \
     && wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
     && unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/bin \
     && rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 # Stage 2: Setup the Node.js environment
-# Specify the base image. Here, we're using Node 16. You can choose the version that matches your application's requirements.
+# Specify the base image. Here, we're using Node 16.
 FROM node:16
 
 # Install dependencies for Homebrew
 RUN apt-get update && apt-get install -y build-essential curl file git
 
-# Create a non-root user for Homebrew
-RUN useradd -m -s /bin/bash linuxbrew && \
-    usermod -aG sudo linuxbrew && \
-    mkdir -p /home/linuxbrew/.linuxbrew && \
-    chown -R linuxbrew:linuxbrew /home/linuxbrew/.linuxbrew
-
-# Switch to the non-root user
-USER linuxbrew
-
-# Set Homebrew environment variables
-ENV HOME=/home/linuxbrew
-ENV USER=linuxbrew
-ENV PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH
-
-# Grant full access to linuxbrew user
-USER root
-RUN chmod -R 777 /home/linuxbrew
-USER linuxbrew
-
 # Install Homebrew
 RUN git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew/Homebrew && \
     mkdir /home/linuxbrew/.linuxbrew/bin && \
     ln -s /home/linuxbrew/.linuxbrew/Homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin && \
-    brew config
+    /home/linuxbrew/.linuxbrew/Homebrew/bin/brew config
+
+# Set Homebrew environment variables
+ENV PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH
 
 # Install AWS CLI using Homebrew
 RUN brew install awscli
@@ -66,4 +51,4 @@ RUN npm run build
 EXPOSE 5000
 
 # Define the command to run the app
-CMD ["npm", "start"]"
+CMD ["npm", "start"]

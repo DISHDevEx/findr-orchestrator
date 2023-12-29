@@ -77,6 +77,7 @@ resource "kubernetes_secret" "env_secret" {
       UUID=${data.vault_generic_secret.findr_secrets.data["uuid"]}
     EOT
   }
+  
 }
 
 # Create a Kubernetes Secret for the CA certificate
@@ -100,8 +101,8 @@ resource "kubernetes_pod" "findr_pod" {
 
   spec {
 
-    //service_account_name = var.service_account_name
-    
+    service_account_name = var.service_account_name
+  
     container {
       image = var.container_image
       name  = join("-", [data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"], "pod"])

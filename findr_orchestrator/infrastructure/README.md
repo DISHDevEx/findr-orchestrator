@@ -61,7 +61,7 @@ terraform init
 ```
 
 ### Step 2: Plan Deployment
-Execute the following command to preview the actions Terraform will perform:
+Execute the following command tkubeco preview the actions Terraform will perform:
 
 ```shell
 terraform plan

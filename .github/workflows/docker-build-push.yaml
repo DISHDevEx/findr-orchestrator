@@ -37,4 +37,4 @@ jobs:
           context: .
           file: findr_orchestrator/orchestrator/Dockerfile
           push: true
-          tags: pravnreddy429/findr_orchestrator:v15
+          tags: pravnreddy429/findr_orchestrator:v16

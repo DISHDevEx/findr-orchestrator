@@ -1,4 +1,10 @@
-output "nginx_service_url" {
-  description = "URL to access the nginx service"
-  value       = kubernetes_service.nginx.load_balancer_ingress[0].hostname
+output "pod_name" {
+  value       = kubernetes_pod.ui_pod.metadata[0].name
+  description = "The name of the deployed Kubernetes pod."
+  sensitive = true
+}
+
+output "load_balancer_ip" {
+  description = "Instruction to find the external IP address of Pod's LoadBalancer"
+  value       = "Use 'kubectl get svc -n var.namespace -o wide' to find the external IP address of Pod's LoadBalancer service."
 }

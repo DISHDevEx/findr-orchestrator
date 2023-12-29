@@ -4,26 +4,26 @@ variable "eks_cluster_region" {
   default     = "us-east-1"
 }
 
+variable "cluster_name" {
+  description = "Name of your EKS cluster"
+  type        = string
+  default     = "iot-findr"
+}
+
 variable "namespace" {
   description = "The Kubernetes namespace where resources are deployed"
   type        = string
-  default     = "default"
+  default     = "ui"
 }
 
-variable "nginx_image" {
-  description = "Docker image for nginx pod"
+variable "container_image" {
+  description = "Docker image for ui pod"
   type        = string
-  default     = "docker.io/library/nginx"
+  default     = "docker.io/pravnreddy429/findr_ui:v0"
 }
 
-variable "nginx_container_port" {
-  description = "Port for nginx container"
-  type        = number
-  default     = 7000
-}
-
-variable "nginx_service_port" {
-  description = "Port for nginx service"
+variable "container_port" {
+  description = "Port for ui container"
   type        = number
   default     = 7000
 }

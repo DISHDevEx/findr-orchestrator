@@ -116,23 +116,22 @@ variable "container_image" {
    /**
    * Default container image
    */ 
-  default = "docker.io/pravnreddy429/findr_orchestrator:v24"
+  default = "docker.io/pravnreddy429/findr_orchestrator:v25"
 
 }
 
-
 variable "aws_access_key_id" {
-  description = "AWS key"
+  description = "AWS Access key"
   type        = string
 }
 
 variable "aws_secret_access_key" {
-  description = "AWS key"
+  description = "AWS Secret Key"
   type        = string
 }
 
 variable "aws_session_token" {
-  description = "AWS key"
+  description = "AWS Session Token"
   type        = string
 }
 

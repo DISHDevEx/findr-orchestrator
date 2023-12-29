@@ -27,11 +27,12 @@ export class Orchestrator {
     }
 
     return new Promise((resolve, reject) => {
-      const command = `export AWS_ACCESS_KEY_ID='${process.env.AWS_ACCESS_KEY_ID}' && ` +
-                      `export AWS_SECRET_ACCESS_KEY='${process.env.AWS_SECRET_ACCESS_KEY}' && ` +
-                      `export AWS_SESSION_TOKEN='${process.env.AWS_SESSION_TOKEN}' && ` +
-                      `terraform init && TF_LOG=DEBUG terraform apply -auto-approve`;
-  
+      const command = `export AWS_ACCESS_KEY_ID='${params.aws_access_key_id}' 
+                       export AWS_SECRET_ACCESS_KEY='${params.aws_secret_access_key}'  
+                       export AWS_SESSION_TOKEN='${params.aws_session_token}'
+                       terraform init && TF_LOG=DEBUG terraform apply -auto-approve`;
+      console.log(command);
+          
       exec(command, { cwd: this.terraformPath }, (error, stdout, stderr) => {
           if (error) {
               console.error(`exec error: ${error}`);

@@ -18,17 +18,21 @@ FROM node:16
 # Install dependencies for Homebrew
 RUN apt-get update && apt-get install -y build-essential curl file git
 
+# Create directories for Homebrew
+RUN mkdir -p /home/linuxbrew/.linuxbrew/Homebrew /home/linuxbrew/.linuxbrew/bin
+
 # Install Homebrew
-RUN git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew/Homebrew && \
-    mkdir /home/linuxbrew/.linuxbrew/bin && \
-    ln -s /home/linuxbrew/.linuxbrew/Homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin && \
-    /home/linuxbrew/.linuxbrew/Homebrew/bin/brew config
+RUN git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew/Homebrew \
+    && ln -s /home/linuxbrew/.linuxbrew/Homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin \
+    && /home/linuxbrew/.linuxbrew/bin/brew update --force --quiet \
+    && chmod -R 755 /home/linuxbrew/.linuxbrew
 
 # Set Homebrew environment variables
-ENV PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH
+ENV PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
 
-# Install AWS CLI using Homebrew
-RUN brew install awscli
+# Install AWS CLI and Terraform using Homebrew
+RUN brew install awscli \
+    && brew install terraform
 
 # Set the working directory inside the Docker image
 WORKDIR /app

@@ -25,5 +25,5 @@ variable "container_image" {
 variable "container_port" {
   description = "Port for oracle container"
   type        = number
-  default     = 6000
+  default     = 9000
 }

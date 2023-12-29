@@ -32,9 +32,6 @@ resource "kubernetes_secret" "env_secret" {
     ".env" = <<-EOT
       VAULT_ADDRESS= ${var.vault_address}
       VAULT_TOKEN= ${var.vault_token}
-      AWS_ACCESS_KEY_ID=${var.aws_access_key_id}
-      AWS_SECRET_ACCESS_KEY=${var.aws_secret_access_key}
-      AWS_SESSION_TOKEN=${var.aws_session_token}
     EOT
   }
 }

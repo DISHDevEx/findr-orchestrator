@@ -116,6 +116,6 @@ variable "container_image" {
    /**
    * Default container image
    */ 
-  default = "docker.io/pravnreddy429/findr_orchestrator:v14"
+  default = "docker.io/pravnreddy429/findr_orchestrator:v15"
 
 }

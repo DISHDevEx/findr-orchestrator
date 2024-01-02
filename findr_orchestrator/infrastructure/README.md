@@ -50,6 +50,11 @@ aws eks --region us-east-1 update-kubeconfig --name iot-findr
 aws eks --region us-east-1 describe-cluster --name iot-findr --query cluster.status
 ```
 Start with creating namespaces for findr microservices
+### MicroServices Deployment order
+1. Vault
+2. Orchestrator
+3. Oracle
+4. UI
 
 ### Step 1: Initialization
 

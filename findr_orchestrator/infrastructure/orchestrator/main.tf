@@ -36,46 +36,64 @@ resource "kubernetes_secret" "env_secret" {
   }
 }
 
-# Kubernetes Pod Resource
-resource "kubernetes_pod" "orchestrator_pod" {
+resource "kubernetes_deployment" "orchestrator_pod" {
   metadata {
-    name      = "orchestrator-pod"
+    name      = "orchestrator"
     namespace = var.namespace
   }
 
   spec {
-    container {
-      image = var.container_image
-      name  = "orchestrator-conatiner"
+    replicas = 1
 
-      volume_mount {
-        mount_path = "app/.env"
-        name       = "env-volume"
-        sub_path   = ".env"
-        read_only  = true
+    selector {
+      match_labels = {
+        app = "orchestrator"
       }
     }
 
-    volume {
-      name = "env-volume"
+    template {
+      metadata {
+        labels = {
+          app = "orchestrator"
+        }
+      }
 
-      secret {
-        secret_name = kubernetes_secret.env_secret.metadata[0].name
+      spec {
+        container {
+          name  = "orchestrator-container"
+          image = var.container_image  # Specify your Docker Hub image
+
+          volume_mount {
+            mount_path = "app/.env"
+            name       = "env-volume"
+            sub_path   = ".env"
+            read_only  = true
+          }
+        }
+
+        volume {
+          name = "env-volume"
+
+          secret {
+            secret_name = kubernetes_secret.env_secret.metadata[0].name
+          }
+        }
       }
     }
   }
 }
 
+
 # Kubernetes Load Balancer Service
 resource "kubernetes_service" "orchestrator_lb" {
   metadata {
-    name      = "orchestrator-lb"
+    name      = "orchestrator-service"
     namespace = var.namespace
   }
 
   spec {
     selector = {
-      app = "orchestrator-pod"
+      app = "orchestrator"
     }
     port {
       protocol    = "TCP"

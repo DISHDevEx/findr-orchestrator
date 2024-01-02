@@ -3,7 +3,7 @@ name: Docker-Push
 on:
   push:
     branches:
-      - 'praveen/oracle-orchestrator-intergration'
+      - 'praveen/oracle-orchestrator-integration'
 
 jobs:
   docker:

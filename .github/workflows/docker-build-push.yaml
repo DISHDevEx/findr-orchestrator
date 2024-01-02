@@ -3,7 +3,7 @@ name: Docker-Push
 on:
   push:
     branches:
-      - 'praveen/orchestrator-debugger'
+      - 'praveen/oracle-orchestrator-intergration'
 
 jobs:
   docker:
@@ -37,4 +37,4 @@ jobs:
           context: .
           file: findr_orchestrator/orchestrator/Dockerfile
           push: true
-          tags: pravnreddy429/findr_orchestrator:v28
+          tags: pravnreddy429/findr_orchestrator:v29

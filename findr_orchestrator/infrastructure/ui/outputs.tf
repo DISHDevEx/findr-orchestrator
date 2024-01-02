@@ -1,5 +1,5 @@
 output "pod_name" {
-  value       = kubernetes_pod.ui_pod.metadata[0].name
+  value       = kubernetes_deployment.ui_deployment.metadata[0].name
   description = "The name of the deployed Kubernetes pod."
   sensitive = true
 }

@@ -102,54 +102,68 @@ resource "kubernetes_secret" "ca_cert_secret" {
   }
 }
 
-# Kubernetes Resource Pod
-resource "kubernetes_pod" "findr_pod" {
+# Kubernetes Resource Deployment
+resource "kubernetes_deployment" "findr_pod" {
   metadata {
-    name      = join("-", [data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"], "pod"])
+    name      = join("-", [data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"]])
     namespace = join("-", [var.namespace, data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"]])
-     labels = {
-      app =  join("-", [data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"]])
-    }
   }
 
   spec {
-    container {
-      name  = join("-", [data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"], "container"])
-      image = var.container_image  # Specify your Docker Hub image
+    replicas = 1
 
-      volume_mount {
-        mount_path = "app/.env"
-        name       = "env-volume"
-        sub_path   = ".env"
-        read_only  = true
-      }
-
-      volume_mount {
-        mount_path = "app/certs/ca.crt"
-        name       = "ca-cert-volume"
-        sub_path   = "ca.crt"
-        read_only  = true
+    selector {
+      match_labels = {
+        app = join("-", [data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"]])
       }
     }
 
-    volume {
-      name = "env-volume"
-
-      secret {
-        secret_name = kubernetes_secret.env_secret.metadata[0].name
+    template {
+      metadata {
+        labels = {
+          app = join("-", [data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"]])
+        }
       }
-    }
 
-    volume {
-      name = "ca-cert-volume"
+      spec {
+        container {
+          name  = join("-", [data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"], "container"])
+          image = var.container_image  # Specify your Docker Hub image
+          volume_mount {
+            mount_path = "app/.env"
+            name       = "env-volume"
+            sub_path   = ".env"
+            read_only  = true
+          }
 
-      secret {
-        secret_name = kubernetes_secret.ca_cert_secret.metadata[0].name
+          volume_mount {
+            mount_path = "app/certs/ca.crt"
+            name       = "ca-cert-volume"
+            sub_path   = "ca.crt"
+            read_only  = true
+          }
+          
+        }
+
+        volume {
+          name = "env-volume"
+
+          secret {
+            secret_name = kubernetes_secret.env_secret.metadata[0].name
+          }
+        }
+
+        volume {
+          name = "ca-cert-volume"
+
+          secret {
+            secret_name = kubernetes_secret.ca_cert_secret.metadata[0].name
+          }
+        }
       }
     }
   }
 }
-
 
 
 

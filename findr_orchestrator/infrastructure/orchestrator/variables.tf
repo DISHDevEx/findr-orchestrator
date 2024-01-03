@@ -104,7 +104,7 @@ variable "vault_token" {
 variable "container_image" {
 
   /**
-   * Vault Token
+   * Container Image
    */
   description = "container image from dockerhub"
 
@@ -116,7 +116,7 @@ variable "container_image" {
    /**
    * Default container image
    */ 
-  default = "docker.io/pravnreddy429/findr_orchestrator:v30"
+  default = "docker.io/pravnreddy429/findr_orchestrator:v31"
 
 }
 

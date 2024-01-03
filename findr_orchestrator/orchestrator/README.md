@@ -7,7 +7,7 @@ This documentation outlines a Node.js application written in TypeScript, designe
 - `src/`: Contains the TypeScript source code.
   - `index.ts`: The main Express server application.
   - `orchestrator.ts`: Class responsible for executing Terraform commands.
-- `terraform/`: Holds Terraform configuration files for Kubernetes resource deployment.
+  - `k8s-resources/`: Holds Terraform configuration files for Kubernetes resource deployment.
 - `Dockerfile`: Docker configuration for containerizing the Node.js application.
 - `package.json`: Defines Node.js project dependencies.
 - `tsconfig.json`: TypeScript compiler configuration.
@@ -48,16 +48,9 @@ This documentation outlines a Node.js application written in TypeScript, designe
      npm start
      ```
 
-   - Using Docker:
-     
-     ```bash
-     docker build -t orchestrator .
-     docker run -p 3000:3000 orchestrator
-     ```
-
 5. **Accessing the API**:
 
-   - The application runs on `http://localhost:3000`.
+   - The application runs on `http://localhost:5000`.
    - To deploy resources, make a POST request to `/deploy`.
 
 ## Usage
@@ -65,5 +58,14 @@ This documentation outlines a Node.js application written in TypeScript, designe
 The application exposes a `/deploy` endpoint to trigger Terraform deployments. To deploy your Kubernetes resources:
 
 ```bash
-curl -X POST http://localhost:3000/deploy -H "Authorization: Bearer YourSecretToken"
+curl -kv -X POST -H "Content-Type: application/json" -H "Accept-Encoding: gzip, deflate, br" -H "Connection:keep-alive" -d '{
+  "cluster_config": "kv/iot-findr-edge",
+  "cluster_name": "iot-findr-edge",
+  "connection_info": "kv/device-a-957fec50-566a-410f-8cc1-64b21b14e6b0",
+  "namespace": "findr",
+  "container_image": "docker.io/pravnreddy429/findr_adapters:v2",
+  "aws_access_key_id": "",
+  "aws_secret_access_key": "",
+  "aws_session_token": ""
+}' "http://localhost:5000/deploy"
 ```

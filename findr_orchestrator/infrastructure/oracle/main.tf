@@ -25,7 +25,7 @@ provider "kubernetes" {
 resource "kubernetes_config_map" "env_config" {
   metadata {
     name      = "env-config"
-    namespace = var.namespace
+    namespace = var.oracle_namespace
   }
 
   data = {
@@ -39,7 +39,7 @@ resource "kubernetes_config_map" "env_config" {
 resource "kubernetes_deployment" "oracle_deployment" {
   metadata {
     name      = "oracle"
-    namespace = var.namespace
+    namespace = var.oracle_namespace
   }
 
   spec {
@@ -61,12 +61,12 @@ resource "kubernetes_deployment" "oracle_deployment" {
       spec {
         container {
           name  = "oracle-container"
-          image = var.oracle_image
+          image = var.oracle_image_url
 
           # Set the environment variables in the container
           env {
             name  = "FINDR_ORCHESTRATOR_URL"
-            value = ""
+            value = var.findr_orchestrator_url
           }
 
           env {
@@ -96,7 +96,7 @@ resource "kubernetes_deployment" "oracle_deployment" {
 resource "kubernetes_service" "oracle_service" {
   metadata {
     name      = "oracle-service"
-    namespace = var.namespace
+    namespace = var.oracle_namespace
   }
 
   spec {

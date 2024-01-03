@@ -1,7 +1,7 @@
 /**
  * The Kubernetes namespace where oracle will be deployed
 */
-variable "namespace" {
+variable "oracle_namespace" {
 
   /**
    * Description of Kubernetes namespace
@@ -118,7 +118,7 @@ variable "findr_orchestrator_url" {
 /**
  * The oracle image url
 */
-variable "oracle_image" {
+variable "oracle_image_url" {
 
   /**
    * Description of oracle image url
@@ -133,6 +133,6 @@ variable "oracle_image" {
   /**
    * Default oracle image url
    */
-  default = "docker.io/pravnreddy429/findr_oracle:v5"
+  default = "docker.io/pravnreddy429/findr_oracle:v10"
 
 }

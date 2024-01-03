@@ -58,14 +58,14 @@ This documentation outlines a Node.js application written in TypeScript, designe
 The application exposes a `/deploy` endpoint to trigger Terraform deployments. To deploy your Kubernetes resources:
 
 ```bash
-curl -X POST http://localhost:5000/deploy \    
--H "Content-Type: application/json" \
--d '{
-    "cluster_config": "",
-    "namespace": "",
-    "pod_name": "",
-    "pod_port": 5001,
-    "container_image": "",
-    "fidnr_loadbalancer": ""
-}'
+curl -kv -X POST -H "Content-Type: application/json" -H "Accept-Encoding: gzip, deflate, br" -H "Connection:keep-alive" -d '{
+  "cluster_config": "kv/iot-findr-edge",
+  "cluster_name": "iot-findr-edge",
+  "connection_info": "kv/device-a-957fec50-566a-410f-8cc1-64b21b14e6b0",
+  "namespace": "findr",
+  "container_image": "docker.io/pravnreddy429/findr_adapters:v2",
+  "aws_access_key_id": "",
+  "aws_secret_access_key": "",
+  "aws_session_token": ""
+}' "http://localhost:5000/deploy"
 ```

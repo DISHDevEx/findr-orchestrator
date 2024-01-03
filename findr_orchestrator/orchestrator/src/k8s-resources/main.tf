@@ -50,20 +50,11 @@ data "vault_generic_secret" "findr_secrets" {
 }
 
 
-# Kubernetes Namespace Resource: findr
-# Creates a Kubernetes namespace for adapters, with the name sourced from a variable.
-resource "kubernetes_namespace" "findr_namespace" {
-  metadata {
-    name = join("-", [var.namespace, data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"]])
-  }
-}
-
-
 # Create a Kubernetes Secret for the .env file
 resource "kubernetes_secret" "env_secret" {
   metadata {
     name = join("-", [data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"], "env-secret"])
-    namespace = join("-", [var.namespace, data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"]])
+    namespace = var.namespace
   }
 
   data = {
@@ -94,7 +85,7 @@ resource "kubernetes_secret" "env_secret" {
 resource "kubernetes_secret" "ca_cert_secret" {
   metadata {
     name = join("-", [data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"], "ca-cert-secret"])
-    namespace = join("-", [var.namespace, data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"]])
+    namespace = var.namespace
   }
 
   data = {
@@ -106,7 +97,7 @@ resource "kubernetes_secret" "ca_cert_secret" {
 resource "kubernetes_deployment" "findr_pod" {
   metadata {
     name      = join("-", [data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"]])
-    namespace = join("-", [var.namespace, data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"]])
+    namespace = var.namespace
   }
 
   spec {
@@ -165,13 +156,11 @@ resource "kubernetes_deployment" "findr_pod" {
   }
 }
 
-
-
 # Kubernetes Load Balancer Service
 resource "kubernetes_service" "findr_lb" {
   metadata {
     name      = join("-", [data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"], "service"])
-    namespace = join("-", [var.namespace, data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"]])
+    namespace = var.namespace
   }
 
   spec {

@@ -49,10 +49,11 @@ data "vault_generic_secret" "findr_secrets" {
   path = var.connection_info
 }
 
+
 # Create a Kubernetes Secret for the .env file
 resource "kubernetes_secret" "env_secret" {
   metadata {
-    name = "env-secret"
+    name = join("-", [data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"], "env-secret"])
     namespace = var.namespace
   }
 
@@ -83,7 +84,7 @@ resource "kubernetes_secret" "env_secret" {
 # Create a Kubernetes Secret for the CA certificate
 resource "kubernetes_secret" "ca_cert_secret" {
   metadata {
-    name = "ca-cert-secret"
+    name = join("-", [data.vault_generic_secret.findr_secrets.data["deviceId"], data.vault_generic_secret.findr_secrets.data["uuid"], "ca-cert-secret"])
     namespace = var.namespace
   }
 
@@ -154,8 +155,6 @@ resource "kubernetes_deployment" "findr_pod" {
     }
   }
 }
-
-
 
 # Kubernetes Load Balancer Service
 resource "kubernetes_service" "findr_lb" {

@@ -1,3 +1,4 @@
+
 /** 
 Output for LoadBalancer IP
 This output provides instructions on how to retrieve the external IP address of the LoadBalancer.

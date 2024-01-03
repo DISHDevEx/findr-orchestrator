@@ -40,6 +40,7 @@ resource "kubernetes_deployment" "oracle_deployment" {
   metadata {
     name      = "oracle"
     namespace = var.oracle_namespace
+
   }
 
   spec {

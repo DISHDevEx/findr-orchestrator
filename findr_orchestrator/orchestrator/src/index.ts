@@ -20,6 +20,7 @@ app.post('/deploy', async (req, res) => {
   // }
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+// Modified to listen on all network interfaces
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server running at http://0.0.0.0:${port}`);
 });

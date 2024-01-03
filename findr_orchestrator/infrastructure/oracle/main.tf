@@ -26,6 +26,7 @@ resource "kubernetes_config_map" "env_config" {
   metadata {
     name      = "env-config"
     namespace = var.oracle_namespace
+
   }
 
   data = {
@@ -40,6 +41,7 @@ resource "kubernetes_deployment" "oracle_deployment" {
   metadata {
     name      = "oracle"
     namespace = var.oracle_namespace
+
   }
 
   spec {
@@ -67,6 +69,7 @@ resource "kubernetes_deployment" "oracle_deployment" {
           env {
             name  = "FINDR_ORCHESTRATOR_URL"
             value = var.findr_orchestrator_url
+
           }
 
           env {

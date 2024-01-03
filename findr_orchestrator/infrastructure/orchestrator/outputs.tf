@@ -2,7 +2,7 @@
 # Outputs
 # -------
 output "pod_name" {
-  value       = kubernetes_deployment.findr_pod.metadata[0].name
+  value       = kubernetes_deployment.orchestrator_pod.metadata[0].name
   description = "The name of the deployed Kubernetes pod."
   sensitive = true
 }

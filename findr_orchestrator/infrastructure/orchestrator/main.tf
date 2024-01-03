@@ -21,22 +21,24 @@ provider "kubernetes" {
   }
 }
 
-# Kubernetes ConfigMap
-resource "kubernetes_config_map" "env_config" {
+# Create a Kubernetes Secret for the .env file
+resource "kubernetes_secret" "env_secret" {
   metadata {
-    name      = "env-config"
+    name = "env-secret"
     namespace = var.namespace
   }
 
   data = {
-    FINDR_ORACLE_URL = var.findr_oracle_url
+    ".env" = <<-EOT
+      VAULT_ADDRESS= ${var.vault_address}
+      VAULT_TOKEN= ${var.vault_token}
+    EOT
   }
 }
 
-# Kubernetes Deployment
-resource "kubernetes_deployment" "ui_deployment" {
+resource "kubernetes_deployment" "orchestrator_pod" {
   metadata {
-    name      = "ui"
+    name      = "orchestrator"
     namespace = var.namespace
   }
 
@@ -45,34 +47,35 @@ resource "kubernetes_deployment" "ui_deployment" {
 
     selector {
       match_labels = {
-        app = "ui"
+        app = "orchestrator"
       }
     }
 
     template {
       metadata {
         labels = {
-          app = "ui"
+          app = "orchestrator"
         }
       }
 
       spec {
         container {
-          name  = "ui-container"
-          image = var.ui_image
+          name  = "orchestrator-container"
+          image = var.container_image  # Specify your Docker Hub image
 
-          # Set the environment variables in the container
-          env {
-            name  = "FINDR_ORACLE_URL"
-            value = ""
+          volume_mount {
+            mount_path = "app/.env"
+            name       = "env-volume"
+            sub_path   = ".env"
+            read_only  = true
           }
         }
 
-        # Mount the ConfigMap as a volume
         volume {
-          name = "env-config-volume"
-          config_map {
-            name = kubernetes_config_map.env_config.metadata[0].name
+          name = "env-volume"
+
+          secret {
+            secret_name = kubernetes_secret.env_secret.metadata[0].name
           }
         }
       }
@@ -80,24 +83,23 @@ resource "kubernetes_deployment" "ui_deployment" {
   }
 }
 
-# Kubernetes Service of type LoadBalancer
-resource "kubernetes_service" "ui_service" {
+
+# Kubernetes Load Balancer Service
+resource "kubernetes_service" "orchestrator_lb" {
   metadata {
-    name      = "ui-service"
+    name      = "orchestrator-service"
     namespace = var.namespace
   }
 
   spec {
     selector = {
-      app = "ui"
+      app = "orchestrator"
     }
-
     port {
-      protocol   = "TCP"
-      port       = 7000
-      target_port = 7000
+      protocol    = "TCP"
+      port        = 5000
+      target_port = 5000
     }
-
     type = "LoadBalancer"
   }
 }

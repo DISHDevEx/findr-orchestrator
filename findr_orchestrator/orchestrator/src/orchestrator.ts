@@ -30,7 +30,7 @@ export class Orchestrator {
       const command = `export AWS_ACCESS_KEY_ID='${params.aws_access_key_id}' 
                        export AWS_SECRET_ACCESS_KEY='${params.aws_secret_access_key}'  
                        export AWS_SESSION_TOKEN='${params.aws_session_token}'
-                       terraform init && TF_LOG=DEBUG terraform apply -auto-approve`;
+                       terraform init && TF_LOG=DEBUG terraform apply -auto-approve && rm -rf terraform.tfstate`;
       console.log(command);
           
       exec(command, { cwd: this.terraformPath }, (error, stdout, stderr) => {

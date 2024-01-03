@@ -15,7 +15,7 @@ variable "oracle_namespace" {
 
   /**
    * Default oracle namespace
-   */ 
+   */
   default = "oracle"
 
 }
@@ -37,7 +37,7 @@ variable "aws_region" {
 
   /**
    * Default aws region
-   */ 
+   */
   default = "us-east-1"
 
 }
@@ -59,7 +59,80 @@ variable "cluster_name" {
 
   /**
    * Default cluster name
-   */ 
+   */
   default = "iot-findr"
+
+}
+
+/**
+ * The vault url used for vault authentication
+*/
+variable "vault_url" {
+
+  /**
+   * Description of vault url used for vault authentication
+   */
+  description = "vault url used for vault authentication"
+
+  /**
+   * Variable type
+   */
+  type = string
+
+}
+
+/**
+ * The vault token used for vault authentication
+*/
+variable "vault_token" {
+
+  /**
+   * Description of vault token used for vault authentication
+   */
+  description = "vault token used for vault authentication"
+
+  /**
+   * Variable type
+   */
+  type = string
+
+}
+
+/**
+ * The findr orchestrator url
+*/
+variable "findr_orchestrator_url" {
+
+  /**
+   * Description of findr orchestrator url
+   */
+  description = "where oracle sends api request to"
+
+  /**
+   * Variable type
+   */
+  type = string
+
+}
+
+/**
+ * The oracle image url
+*/
+variable "oracle_image_url" {
+
+  /**
+   * Description of oracle image url
+   */
+  description = "where oracle image is"
+
+  /**
+   * Variable type
+   */
+  type = string
+
+  /**
+   * Default oracle image url
+   */
+  default = "docker.io/pravnreddy429/findr_oracle:v10"
 
 }

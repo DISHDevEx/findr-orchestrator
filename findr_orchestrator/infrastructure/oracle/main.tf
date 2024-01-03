@@ -21,6 +21,20 @@ provider "kubernetes" {
   }
 }
 
+# Kubernetes ConfigMap
+resource "kubernetes_config_map" "env_config" {
+  metadata {
+    name      = "env-config"
+    namespace = var.oracle_namespace
+  }
+
+  data = {
+    FINDR_ORCHESTRATOR_URL = var.findr_orchestrator_url
+    VAULT_URL              = var.vault_url
+    VAULT_TOKEN            = var.vault_token
+  }
+}
+
 # Kubernetes Deployment
 resource "kubernetes_deployment" "oracle_deployment" {
   metadata {
@@ -29,7 +43,7 @@ resource "kubernetes_deployment" "oracle_deployment" {
   }
 
   spec {
-    replicas = 3
+    replicas = 1
 
     selector {
       match_labels = {
@@ -47,7 +61,31 @@ resource "kubernetes_deployment" "oracle_deployment" {
       spec {
         container {
           name  = "oracle-container"
-          image = "docker.io/pravnreddy429/findr_oracle:v1"  # Specify your Docker Hub image
+          image = var.oracle_image_url
+
+          # Set the environment variables in the container
+          env {
+            name  = "FINDR_ORCHESTRATOR_URL"
+            value = var.findr_orchestrator_url
+          }
+
+          env {
+            name  = "VAULT_URL"
+            value = var.vault_url
+          }
+
+          env {
+            name  = "VAULT_TOKEN"
+            value = var.vault_token
+          }
+        }
+
+        # Mount the ConfigMap as a volume
+        volume {
+          name = "env-config-volume"
+          config_map {
+            name = kubernetes_config_map.env_config.metadata[0].name
+          }
         }
       }
     }
@@ -68,8 +106,8 @@ resource "kubernetes_service" "oracle_service" {
 
     port {
       protocol   = "TCP"
-      port       = 6000
-      target_port = 6000
+      port       = 9000
+      target_port = 9000
     }
 
     type = "LoadBalancer"

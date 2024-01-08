@@ -1,7 +1,7 @@
 
 # Orchestrator
 
-Welcome to the Orchestrator documentation. This Node.js application, written in TypeScript, is crafted to streamline the deployment of resources to a Kubernetes cluster using Terraform. It features an API endpoint for initiating Terraform configurations to deploy Kubernetes pods effectively.
+This Node.js application, written in TypeScript, is crafted to streamline the deployment of resources to a Kubernetes cluster using Terraform. It features an API endpoint for initiating Terraform configurations to deploy Kubernetes pods effectively.
 
 ## Project Structure
 

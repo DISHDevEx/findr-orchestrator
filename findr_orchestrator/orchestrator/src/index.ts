@@ -10,14 +10,14 @@ const orchestrator = new Orchestrator();
 app.use(json());
 
 app.post('/deploy', async (req, res) => {
-  //try {
+  try {
   const message = await orchestrator.deploy(req.body);
-  res.send(message);
-  //} 
-  // catch (error: any) {
-  //   console.error(`Error: ${error.message}`);
-  //   res.status(500).send(`Error: ${error.message}`);
-  // }
+  res.status(200).send(message);
+  } 
+  catch (error: any) {
+    console.error(`Error: ${error.message}`);
+    res.status(500).send(`Error: ${error.message}`);
+  }
 });
 
 // Modified to listen on all network interfaces

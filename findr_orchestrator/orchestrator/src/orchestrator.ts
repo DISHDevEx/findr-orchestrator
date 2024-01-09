@@ -38,9 +38,11 @@ export class Orchestrator {
               console.error(`exec error: ${error}`);
               reject(error);
           } else {
-              console.log(`stdout: ${stdout}`);
-              console.error(`stderr: ${stderr}`);
-              resolve('Deployment initiated.');
+            console.log(`stdout: ${stdout}`);
+            console.error(`stderr: ${stderr}`);
+            // Assuming stdout contains the deployment info you need
+            const deploymentInfo = this.parseDeploymentInfo(stdout);
+            resolve(deploymentInfo);
           }
       });
     });
@@ -53,5 +55,11 @@ export class Orchestrator {
       console.error(`File write error: ${error}`);
       throw error;
     }
+  }
+
+  private parseDeploymentInfo(stdout: string): string {
+    // Parse the stdout to extract deployment information
+    // This is a placeholder; implement specific logic based on your output format
+    return `Deployment successful: ${stdout}`;
   }
 }

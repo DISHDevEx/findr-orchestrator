@@ -68,8 +68,8 @@ resource "kubernetes_service" "ui_service" {
 
     port {
       protocol   = "TCP"
-      port       = 7000
-      target_port = 7000
+      port       = 7001
+      target_port = 7001
     }
 
     type = "LoadBalancer"

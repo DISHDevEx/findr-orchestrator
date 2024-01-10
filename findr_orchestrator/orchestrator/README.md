@@ -69,7 +69,3 @@ curl -kv -X POST -H "Content-Type: application/json" -H "Accept-Encoding: gzip, 
   "aws_session_token": ""
 }' "http://localhost:5000/deploy"
 ```
-
----
-
-This documentation provides a comprehensive guide to setting up and using the Orchestrator for efficient Kubernetes resource management.

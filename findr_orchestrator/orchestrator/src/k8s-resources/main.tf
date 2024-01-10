@@ -66,8 +66,11 @@ resource "kubernetes_secret" "env_secret" {
       DEVICE_ID=${data.vault_generic_secret.findr_secrets.data["deviceId"]}
       DYNAMODB_REGION=${data.vault_generic_secret.findr_secrets.data["dynamodbRegion"]}
       DYNAMODB_TABLE_NAME=${data.vault_generic_secret.findr_secrets.data["dynamodbTableName"]}
+      HTTP_IP=${data.vault_generic_secret.findr_secrets.data["httpIp"]}
+      HTTP_RESPONSE_KEY=${data.vault_generic_secret.findr_secrets.data["httpResponseKey"]}
       HTTP_PORT_NUMBER=${data.vault_generic_secret.findr_secrets.data["httpPortNumber"]}
       HTTP_ROUTE=${data.vault_generic_secret.findr_secrets.data["httpRoute"]}
+      HTTP_REQUEST_INTERVAL=${data.vault_generic_secret.findr_secrets.data["httpRequestInterval"]}
       LOCAL_FILE_PATH=${data.vault_generic_secret.findr_secrets.data["localFilePath"]}
       MQTTS_BROKER=${data.vault_generic_secret.findr_secrets.data["mqttsBroker"]}
       S3_BUCKET_NAME=${data.vault_generic_secret.findr_secrets.data["s3BucketName"]}

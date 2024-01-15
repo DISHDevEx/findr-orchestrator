@@ -73,7 +73,7 @@ resource "kubernetes_deployment" "ui_deployment" {
           image = "docker.io/pravnreddy429/findr_ui"  # Specify your Docker Hub image
           env {
             name  = "REACT_APP_ORACLE_NODE_PORT"
-            value = "${null_resource.export_oracle.ORACLE_NODE_PORT"
+            value = "${null_resource.export_oracle.ORACLE_NODE_PORT}"
           }
           env {
             name  = "REACT_APP_ORACLE_NODE_IP"

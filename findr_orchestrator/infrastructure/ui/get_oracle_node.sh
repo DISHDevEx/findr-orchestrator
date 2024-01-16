@@ -1,4 +1,4 @@
-#make sure jq is installed
+#install jq for mac
 brew install jq
 
 #get node port of oracle service
@@ -12,5 +12,5 @@ NODE_IP=$(kubectl get node $NODE_NAME -o jsonpath='{.status.addresses[?(@.type==
 #create oracle URL
 ORACLE_URL="http://${NODE_IP}:${NODE_PORT}"  
 
-#create json 
+#create json to set as external data in terraform
 jq -n --arg oracle_url "$ORACLE_URL" '{"oracle_url":$oracle_url}'

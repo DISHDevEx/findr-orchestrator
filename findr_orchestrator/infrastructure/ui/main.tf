@@ -21,23 +21,23 @@ provider "kubernetes" {
   }
 }
 
-# Kubernetes ConfigMap
-resource "kubernetes_config_map" "env_config" {
-  metadata {
-    name      = "env-config"
-    namespace = var.namespace
-  }
-
-  data = {
-    FINDR_ORACLE_URL = var.findr_oracle_url
-  }
+#Get NodePort and NodeIP of Oracle for API endpoint
+data "external" "oracle_info" {
+  program = ["bash", "${path.module}/get_oracle_node.sh"]
 }
+
+locals {
+  oracle_url = data.external.oracle_info.result.oracle_url
+}
+
 
 # Kubernetes Deployment
 resource "kubernetes_deployment" "ui_deployment" {
+  depends_on = [data.external.oracle_info]
+
   metadata {
     name      = "ui"
-    namespace = var.namespace
+    namespace = var.ui_namespace
   }
 
   spec {
@@ -55,24 +55,14 @@ resource "kubernetes_deployment" "ui_deployment" {
           app = "ui"
         }
       }
-
+    
       spec {
         container {
           name  = "ui-container"
-          image = var.ui_image
-
-          # Set the environment variables in the container
+          image = "docker.io/pravnreddy429/findr_ui"  # Specify your Docker Hub image
           env {
-            name  = "FINDR_ORACLE_URL"
-            value = ""
-          }
-        }
-
-        # Mount the ConfigMap as a volume
-        volume {
-          name = "env-config-volume"
-          config_map {
-            name = kubernetes_config_map.env_config.metadata[0].name
+            name  = "REACT_APP_ORACLE_URL"
+            value = "${local.oracle_url}"
           }
         }
       }
@@ -84,7 +74,7 @@ resource "kubernetes_deployment" "ui_deployment" {
 resource "kubernetes_service" "ui_service" {
   metadata {
     name      = "ui-service"
-    namespace = var.namespace
+    namespace = var.ui_namespace
   }
 
   spec {
@@ -94,8 +84,8 @@ resource "kubernetes_service" "ui_service" {
 
     port {
       protocol   = "TCP"
-      port       = 7000
-      target_port = 7000
+      port       = 7001
+      target_port = 7001
     }
 
     type = "LoadBalancer"
